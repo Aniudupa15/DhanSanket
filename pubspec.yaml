@@ -1,26 +1,35 @@
-name: stock_predictor
-description: Professional Stock Market Prediction App
+name: dhan_sanket
+description: DhanSanket - Indian stock market app (NSE data, watchlists, portfolios, AI signals)
 publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.8.0 <4.0.0'
 
 dependencies:
+  decimal: ^3.2.5
+  dio: ^5.10.0
+  equatable: ^2.1.0
   flutter:
     sdk: flutter
-
-  get: ^4.6.6
-  http: ^1.2.0
-  fl_chart: ^0.68.0
-  google_fonts: ^6.1.0
-  intl: ^0.20.2
-  dio: ^5.9.0
+  flutter_bloc: ^9.1.1
+  flutter_secure_storage: ^10.3.1
+  freezed_annotation: ^3.1.0
+  get_it: ^9.2.1
+  go_router: ^17.3.0
+  google_fonts: ^8.2.0
+  intl: ^0.20.3
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  bloc_test: ^10.0.0
+  mocktail: ^1.0.5
+  flutter_lints: ^6.0.0
+  build_runner: ^2.15.1
+  freezed: ^3.2.3
+  json_serializable: ^6.11.2
 
 flutter:
   uses-material-design: true
