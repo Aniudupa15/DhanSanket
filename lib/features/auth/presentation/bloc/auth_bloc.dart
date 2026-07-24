@@ -20,6 +20,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthLoginRequested>(_onLoginRequested);
     on<AuthLogoutRequested>(_onLogoutRequested);
     on<AuthSessionExpired>(_onSessionExpired);
+    on<AuthProfileUpdateRequested>(_onProfileUpdateRequested);
 
     _sessionExpiredSubscription = sessionNotifier.onSessionExpired.listen((_) => add(const AuthSessionExpired()));
   }
@@ -71,6 +72,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _onSessionExpired(AuthSessionExpired event, Emitter<AuthState> emit) async {
     emit(state.copyWith(status: AuthStatus.sessionExpired, clearUser: true));
+  }
+
+  Future<void> _onProfileUpdateRequested(AuthProfileUpdateRequested event, Emitter<AuthState> emit) async {
+    final result = await _repository.updateProfile(displayName: event.displayName, email: event.email);
+    switch (result) {
+      case Success(data: final user):
+        emit(state.copyWith(user: user, clearFailure: true));
+      case Error(failure: final failure):
+        emit(state.copyWith(failure: failure));
+    }
   }
 
   @override

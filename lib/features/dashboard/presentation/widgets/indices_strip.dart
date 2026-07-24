@@ -22,7 +22,7 @@ class IndicesStrip extends StatelessWidget {
         itemBuilder: (context, index) {
           final quote = indices[index];
           final isPositive = quote.change >= Decimal.zero;
-          final color = isPositive ? AppColors.positiveChange : AppColors.negativeChange;
+          final color = isPositive ? AppColors.positiveChange(context) : AppColors.negativeChange(context);
           return Card(
             child: Padding(
               padding: const EdgeInsets.all(12),

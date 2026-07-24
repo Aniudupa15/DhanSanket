@@ -1,5 +1,8 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:dhan_sanket/bootstrap/injector.dart';
 import 'package:dhan_sanket/core/error/failure.dart';
+import 'package:dhan_sanket/core/error/result.dart';
+import 'package:dhan_sanket/features/alerts/domain/repositories/notification_repository.dart';
 import 'package:dhan_sanket/features/dashboard/domain/entities/dashboard_snapshot.dart';
 import 'package:dhan_sanket/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:dhan_sanket/features/dashboard/presentation/bloc/dashboard_event.dart';
@@ -12,8 +15,11 @@ import 'package:mocktail/mocktail.dart';
 
 class MockDashboardBloc extends MockBloc<DashboardEvent, DashboardState> implements DashboardBloc {}
 
+class MockNotificationRepository extends Mock implements NotificationRepository {}
+
 void main() {
   late MockDashboardBloc bloc;
+  late MockNotificationRepository notificationRepository;
 
   const snapshotWithNotes = DashboardSnapshot(
     marketStatus: [],
@@ -29,6 +35,15 @@ void main() {
 
   setUp(() {
     bloc = MockDashboardBloc();
+    notificationRepository = MockNotificationRepository();
+    when(
+      () => notificationRepository.list(unreadOnly: any(named: 'unreadOnly'), limit: any(named: 'limit')),
+    ).thenAnswer((_) async => const Success([]));
+    getIt.registerSingleton<NotificationRepository>(notificationRepository);
+  });
+
+  tearDown(() {
+    getIt.unregister<NotificationRepository>();
   });
 
   Widget buildSubject() {

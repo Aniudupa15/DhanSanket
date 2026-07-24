@@ -90,6 +90,35 @@ void main() {
   );
 
   blocTest<AuthBloc, AuthState>(
+    'updateProfile: emits the updated user on success without touching status',
+    build: () {
+      final updated = UserProfile(id: 'u1', email: 'new@example.com', displayName: 'New Name', createdAt: user.createdAt);
+      when(
+        () => repository.updateProfile(displayName: any(named: 'displayName'), email: any(named: 'email')),
+      ).thenAnswer((_) async => Success(updated));
+      return AuthBloc(repository: repository, sessionNotifier: sessionNotifier);
+    },
+    act: (bloc) => bloc.add(const AuthProfileUpdateRequested(displayName: 'New Name', email: 'new@example.com')),
+    expect: () => [
+      isA<AuthState>().having((s) => s.user?.displayName, 'user.displayName', 'New Name'),
+    ],
+  );
+
+  blocTest<AuthBloc, AuthState>(
+    'updateProfile: emits a failure on error',
+    build: () {
+      when(
+        () => repository.updateProfile(displayName: any(named: 'displayName'), email: any(named: 'email')),
+      ).thenAnswer((_) async => const Error(ValidationFailure('Email already in use', {})));
+      return AuthBloc(repository: repository, sessionNotifier: sessionNotifier);
+    },
+    act: (bloc) => bloc.add(const AuthProfileUpdateRequested(email: 'taken@example.com')),
+    expect: () => [
+      isA<AuthState>().having((s) => s.failure?.message, 'failure message', 'Email already in use'),
+    ],
+  );
+
+  blocTest<AuthBloc, AuthState>(
     'reacts to AuthSessionNotifier by emitting sessionExpired',
     build: () => AuthBloc(repository: repository, sessionNotifier: sessionNotifier),
     act: (bloc) => sessionNotifier.notifySessionExpired(),
