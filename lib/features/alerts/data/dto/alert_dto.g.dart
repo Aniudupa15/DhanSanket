@@ -13,9 +13,7 @@ _AlertDto _$AlertDtoFromJson(Map<String, dynamic> json) => _AlertDto(
   condition: json['condition'] as Map<String, dynamic>,
   status: $enumDecode(_$AlertStatusDtoEnumMap, json['status']),
   createdAt: DateTime.parse(json['created_at'] as String),
-  triggeredAt: json['triggered_at'] == null
-      ? null
-      : DateTime.parse(json['triggered_at'] as String),
+  triggeredAt: json['triggered_at'] == null ? null : DateTime.parse(json['triggered_at'] as String),
 );
 
 Map<String, dynamic> _$AlertDtoToJson(_AlertDto instance) => <String, dynamic>{

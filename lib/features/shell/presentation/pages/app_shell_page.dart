@@ -18,6 +18,7 @@ class AppShellPage extends StatelessWidget {
       selectedIcon: Icons.account_balance_wallet,
       label: 'Portfolio',
     ),
+    (path: RoutePaths.analysis, icon: Icons.insights_outlined, selectedIcon: Icons.insights, label: 'Analysis'),
     (path: RoutePaths.more, icon: Icons.more_horiz, selectedIcon: Icons.more_horiz, label: 'More'),
   ];
 

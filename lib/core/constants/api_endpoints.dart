@@ -32,6 +32,13 @@ class ApiEndpoints {
 
   static const String searchHistory = '/search-history';
 
+  static const String dividends = '/dividends';
+
+  static const String analysisIntraday = '/analysis/intraday';
+  static const String analysisLongTerm = '/analysis/long-term';
+
+  static const String wsLive = '/ws/live';
+
   static const String stockSearch = '/stocks/search';
 
   static String stockDetail(String symbol) => '/stocks/$symbol';

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../core/network/connectivity_service.dart';
+import '../core/network/live_socket_service.dart';
 import '../core/router/app_router.dart';
 import '../core/theme/app_theme.dart';
+import '../core/widgets/live_connection_banner.dart';
+import '../core/widgets/market_hours_banner.dart';
 import '../core/widgets/offline_banner.dart';
 import '../features/auth/presentation/bloc/auth_bloc.dart';
 import '../features/dashboard/presentation/bloc/dashboard_bloc.dart';
@@ -33,7 +36,9 @@ class App extends StatelessWidget {
         builder: (context, child) {
           return Column(
             children: [
+              const MarketHoursBanner(),
               OfflineBanner(connectivityService: getIt<ConnectivityService>()),
+              LiveConnectionBanner(liveSocketService: getIt<LiveSocketService>()),
               Expanded(child: child ?? const SizedBox.shrink()),
             ],
           );

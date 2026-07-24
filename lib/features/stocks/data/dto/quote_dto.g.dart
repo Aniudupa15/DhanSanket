@@ -9,15 +9,11 @@ part of 'quote_dto.dart';
 _QuoteDto _$QuoteDtoFromJson(Map<String, dynamic> json) => _QuoteDto(
   lastPrice: const DecimalConverter().fromJson(json['last_price'] as String),
   change: const DecimalConverter().fromJson(json['change'] as String),
-  changePercent: const DecimalConverter().fromJson(
-    json['change_percent'] as String,
-  ),
+  changePercent: const DecimalConverter().fromJson(json['change_percent'] as String),
   open: const DecimalConverter().fromJson(json['open'] as String),
   high: const DecimalConverter().fromJson(json['high'] as String),
   low: const DecimalConverter().fromJson(json['low'] as String),
-  previousClose: const DecimalConverter().fromJson(
-    json['previous_close'] as String,
-  ),
+  previousClose: const DecimalConverter().fromJson(json['previous_close'] as String),
   volume: (json['volume'] as num).toInt(),
   asOf: DateTime.parse(json['as_of'] as String),
 );

@@ -11,8 +11,7 @@ _StochRsiDto _$StochRsiDtoFromJson(Map<String, dynamic> json) => _StochRsiDto(
   d: const NullableDecimalConverter().fromJson(json['d'] as String?),
 );
 
-Map<String, dynamic> _$StochRsiDtoToJson(_StochRsiDto instance) =>
-    <String, dynamic>{
-      'k': const NullableDecimalConverter().toJson(instance.k),
-      'd': const NullableDecimalConverter().toJson(instance.d),
-    };
+Map<String, dynamic> _$StochRsiDtoToJson(_StochRsiDto instance) => <String, dynamic>{
+  'k': const NullableDecimalConverter().toJson(instance.k),
+  'd': const NullableDecimalConverter().toJson(instance.d),
+};

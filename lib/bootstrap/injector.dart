@@ -5,6 +5,7 @@ import '../core/network/auth_interceptor.dart';
 import '../core/network/auth_session_notifier.dart';
 import '../core/network/connectivity_service.dart';
 import '../core/network/dio_client.dart';
+import '../core/network/live_socket_service.dart';
 import '../core/network/token_refresh_coordinator.dart';
 import '../core/router/app_router.dart';
 import '../core/storage/secure_token_storage.dart';
@@ -16,6 +17,11 @@ import '../features/alerts/domain/repositories/alert_repository.dart';
 import '../features/alerts/domain/repositories/notification_repository.dart';
 import '../features/alerts/presentation/bloc/alert_bloc.dart';
 import '../features/alerts/presentation/bloc/notification_bloc.dart';
+import '../features/analysis/data/datasources/analysis_remote_data_source.dart';
+import '../features/analysis/data/repositories/analysis_repository_impl.dart';
+import '../features/analysis/domain/repositories/analysis_repository.dart';
+import '../features/analysis/presentation/bloc/intraday_analysis_bloc.dart';
+import '../features/analysis/presentation/bloc/long_term_analysis_bloc.dart';
 import '../features/auth/data/datasources/auth_remote_data_source.dart';
 import '../features/auth/data/repositories/auth_repository_impl.dart';
 import '../features/auth/domain/repositories/auth_repository.dart';
@@ -29,6 +35,10 @@ import '../features/compare/data/repositories/comparison_repository_impl.dart';
 import '../features/compare/domain/repositories/comparison_repository.dart';
 import '../features/compare/presentation/bloc/comparison_bloc.dart';
 import '../features/dashboard/data/datasources/dashboard_remote_data_source.dart';
+import '../features/dividends/data/datasources/dividend_remote_data_source.dart';
+import '../features/dividends/data/repositories/dividend_repository_impl.dart';
+import '../features/dividends/domain/repositories/dividend_repository.dart';
+import '../features/dividends/presentation/bloc/dividend_bloc.dart';
 import '../features/dashboard/data/repositories/dashboard_repository_impl.dart';
 import '../features/dashboard/domain/repositories/dashboard_repository.dart';
 import '../features/dashboard/presentation/bloc/dashboard_bloc.dart';
@@ -79,6 +89,7 @@ void setupInjector() {
   getIt.registerLazySingleton<SecureTokenStorage>(() => SecureTokenStorage());
   getIt.registerLazySingleton<AuthSessionNotifier>(() => AuthSessionNotifier());
   getIt.registerLazySingleton<ConnectivityService>(() => ConnectivityService());
+  getIt.registerLazySingleton<LiveSocketService>(() => LiveSocketService(tokenStorage: getIt<SecureTokenStorage>()));
 
   // Two Dio instances: `mainDio` (gets the auth interceptor, used by every
   // feature) and `bareDio` (no interceptor - used exclusively by
@@ -117,7 +128,9 @@ void setupInjector() {
     () => DashboardRemoteDataSource(getIt<Dio>(instanceName: _mainDio)),
   );
   getIt.registerLazySingleton<DashboardRepository>(() => DashboardRepositoryImpl(getIt<DashboardRemoteDataSource>()));
-  getIt.registerLazySingleton<DashboardBloc>(() => DashboardBloc(repository: getIt<DashboardRepository>()));
+  getIt.registerLazySingleton<DashboardBloc>(
+    () => DashboardBloc(repository: getIt<DashboardRepository>(), liveSocketService: getIt<LiveSocketService>()),
+  );
 
   // Stocks feature - repository/datasource are stateless, safe as
   // singletons; every Bloc below is a *factory* (fresh instance per page
@@ -126,7 +139,9 @@ void setupInjector() {
   getIt.registerLazySingleton<StockRemoteDataSource>(() => StockRemoteDataSource(getIt<Dio>(instanceName: _mainDio)));
   getIt.registerLazySingleton<StockRepository>(() => StockRepositoryImpl(getIt<StockRemoteDataSource>()));
   getIt.registerFactory<StockSearchBloc>(() => StockSearchBloc(repository: getIt<StockRepository>()));
-  getIt.registerFactory<StockQuoteBloc>(() => StockQuoteBloc(repository: getIt<StockRepository>()));
+  getIt.registerFactory<StockQuoteBloc>(
+    () => StockQuoteBloc(repository: getIt<StockRepository>(), liveSocketService: getIt<LiveSocketService>()),
+  );
   getIt.registerFactory<PriceHistoryBloc>(() => PriceHistoryBloc(repository: getIt<StockRepository>()));
   getIt.registerFactory<IndicatorsBloc>(() => IndicatorsBloc(repository: getIt<StockRepository>()));
   getIt.registerFactory<SignalsBloc>(() => SignalsBloc(repository: getIt<StockRepository>()));
@@ -140,7 +155,9 @@ void setupInjector() {
   );
   getIt.registerLazySingleton<WatchlistRepository>(() => WatchlistRepositoryImpl(getIt<WatchlistRemoteDataSource>()));
   getIt.registerFactory<WatchlistBloc>(() => WatchlistBloc(repository: getIt<WatchlistRepository>()));
-  getIt.registerFactory<WatchlistDetailBloc>(() => WatchlistDetailBloc(repository: getIt<WatchlistRepository>()));
+  getIt.registerFactory<WatchlistDetailBloc>(
+    () => WatchlistDetailBloc(repository: getIt<WatchlistRepository>(), liveSocketService: getIt<LiveSocketService>()),
+  );
 
   // Portfolio feature
   getIt.registerLazySingleton<PortfolioRemoteDataSource>(
@@ -148,7 +165,9 @@ void setupInjector() {
   );
   getIt.registerLazySingleton<PortfolioRepository>(() => PortfolioRepositoryImpl(getIt<PortfolioRemoteDataSource>()));
   getIt.registerFactory<PortfolioBloc>(() => PortfolioBloc(repository: getIt<PortfolioRepository>()));
-  getIt.registerFactory<PortfolioDetailBloc>(() => PortfolioDetailBloc(repository: getIt<PortfolioRepository>()));
+  getIt.registerFactory<PortfolioDetailBloc>(
+    () => PortfolioDetailBloc(repository: getIt<PortfolioRepository>(), liveSocketService: getIt<LiveSocketService>()),
+  );
 
   // News feature
   getIt.registerLazySingleton<NewsRemoteDataSource>(() => NewsRemoteDataSource(getIt<Dio>(instanceName: _mainDio)));
@@ -158,7 +177,9 @@ void setupInjector() {
   // Market feature (movers lists + heatmap)
   getIt.registerLazySingleton<MarketRemoteDataSource>(() => MarketRemoteDataSource(getIt<Dio>(instanceName: _mainDio)));
   getIt.registerLazySingleton<MarketRepository>(() => MarketRepositoryImpl(getIt<MarketRemoteDataSource>()));
-  getIt.registerFactory<MarketMoversBloc>(() => MarketMoversBloc(repository: getIt<MarketRepository>()));
+  getIt.registerFactory<MarketMoversBloc>(
+    () => MarketMoversBloc(repository: getIt<MarketRepository>(), liveSocketService: getIt<LiveSocketService>()),
+  );
   getIt.registerFactory<HeatmapBloc>(() => HeatmapBloc(repository: getIt<MarketRepository>()));
 
   // Compare feature
@@ -193,6 +214,21 @@ void setupInjector() {
   getIt.registerLazySingleton<ChatRemoteDataSource>(() => ChatRemoteDataSource(getIt<Dio>(instanceName: _mainDio)));
   getIt.registerLazySingleton<ChatRepository>(() => ChatRepositoryImpl(getIt<ChatRemoteDataSource>()));
   getIt.registerFactory<ChatBloc>(() => ChatBloc(repository: getIt<ChatRepository>()));
+
+  // Analysis feature
+  getIt.registerLazySingleton<AnalysisRemoteDataSource>(
+    () => AnalysisRemoteDataSource(getIt<Dio>(instanceName: _mainDio)),
+  );
+  getIt.registerLazySingleton<AnalysisRepository>(() => AnalysisRepositoryImpl(getIt<AnalysisRemoteDataSource>()));
+  getIt.registerFactory<IntradayAnalysisBloc>(() => IntradayAnalysisBloc(repository: getIt<AnalysisRepository>()));
+  getIt.registerFactory<LongTermAnalysisBloc>(() => LongTermAnalysisBloc(repository: getIt<AnalysisRepository>()));
+
+  // Dividends feature
+  getIt.registerLazySingleton<DividendRemoteDataSource>(
+    () => DividendRemoteDataSource(getIt<Dio>(instanceName: _mainDio)),
+  );
+  getIt.registerLazySingleton<DividendRepository>(() => DividendRepositoryImpl(getIt<DividendRemoteDataSource>()));
+  getIt.registerFactory<DividendBloc>(() => DividendBloc(repository: getIt<DividendRepository>()));
 
   // Router - depends on AuthBloc for its redirect logic and refreshListenable.
   getIt.registerLazySingleton<AppRouter>(() => AppRouter(getIt<AuthBloc>()));
