@@ -33,5 +33,11 @@ linter:
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
 
+    # The suggested rewrite (`'key': ?value`) only applies cleanly when the
+    # map's value IS the null-checked variable. Our few call sites null-check
+    # one variable but assign a *transform* of it as the value, which the
+    # null-aware map-entry syntax can't express without a clunkier fallback.
+    use_null_aware_elements: false
+
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
