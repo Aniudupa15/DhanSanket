@@ -25,7 +25,9 @@ void main() {
   });
 
   Widget buildSubject() {
-    return MaterialApp(home: BlocProvider<AuthBloc>.value(value: authBloc, child: const LoginPage()));
+    return MaterialApp(
+      home: BlocProvider<AuthBloc>.value(value: authBloc, child: const LoginPage()),
+    );
   }
 
   testWidgets('shows validation errors when submitting an empty form', (tester) async {
@@ -47,9 +49,7 @@ void main() {
     await tester.tap(find.text('Log in'));
     await tester.pump();
 
-    verify(
-      () => authBloc.add(const AuthLoginRequested(email: 'test@example.com', password: 'password123')),
-    ).called(1);
+    verify(() => authBloc.add(const AuthLoginRequested(email: 'test@example.com', password: 'password123'))).called(1);
   });
 
   testWidgets('shows a loading indicator while authenticating', (tester) async {

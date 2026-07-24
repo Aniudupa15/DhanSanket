@@ -4,10 +4,5 @@ class UserProfile {
   final String displayName;
   final DateTime createdAt;
 
-  const UserProfile({
-    required this.id,
-    required this.email,
-    required this.displayName,
-    required this.createdAt,
-  });
+  const UserProfile({required this.id, required this.email, required this.displayName, required this.createdAt});
 }

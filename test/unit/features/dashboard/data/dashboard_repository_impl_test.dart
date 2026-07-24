@@ -89,9 +89,12 @@ void main() {
   });
 
   test('maps a DioException to an Error result', () async {
-    when(
-      () => remote.getDashboard(),
-    ).thenThrow(DioException(requestOptions: RequestOptions(path: '/dashboard'), type: DioExceptionType.connectionTimeout));
+    when(() => remote.getDashboard()).thenThrow(
+      DioException(
+        requestOptions: RequestOptions(path: '/dashboard'),
+        type: DioExceptionType.connectionTimeout,
+      ),
+    );
 
     final result = await repository.getDashboard();
 

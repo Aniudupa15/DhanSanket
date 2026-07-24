@@ -13,8 +13,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   late final StreamSubscription<void> _sessionExpiredSubscription;
 
   AuthBloc({required AuthRepository repository, required AuthSessionNotifier sessionNotifier})
-      : _repository = repository,
-        super(const AuthState()) {
+    : _repository = repository,
+      super(const AuthState()) {
     on<AuthSessionRequested>(_onSessionRequested);
     on<AuthRegisterRequested>(_onRegisterRequested);
     on<AuthLoginRequested>(_onLoginRequested);

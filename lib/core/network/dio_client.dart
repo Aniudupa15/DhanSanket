@@ -6,11 +6,11 @@ class DioClient {
   DioClient._();
 
   static BaseOptions get _baseOptions => BaseOptions(
-        baseUrl: AppConfig.baseUrl,
-        connectTimeout: const Duration(seconds: 15),
-        receiveTimeout: const Duration(seconds: 15),
-        headers: const {'Content-Type': 'application/json'},
-      );
+    baseUrl: AppConfig.baseUrl,
+    connectTimeout: const Duration(seconds: 15),
+    receiveTimeout: const Duration(seconds: 15),
+    headers: const {'Content-Type': 'application/json'},
+  );
 
   /// The app-wide Dio instance - gets the [AuthInterceptor] attached by the
   /// DI container after construction.

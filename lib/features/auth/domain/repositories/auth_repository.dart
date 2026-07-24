@@ -2,11 +2,7 @@ import '../../../../core/error/result.dart';
 import '../entities/user_profile.dart';
 
 abstract class AuthRepository {
-  Future<Result<UserProfile>> register({
-    required String email,
-    required String password,
-    required String displayName,
-  });
+  Future<Result<UserProfile>> register({required String email, required String password, required String displayName});
 
   Future<Result<UserProfile>> login({required String email, required String password});
 

@@ -23,9 +23,6 @@ class SecureTokenStorage {
   Future<String?> getRefreshToken() => _storage.read(key: StorageKeys.refreshToken);
 
   Future<void> clear() async {
-    await Future.wait([
-      _storage.delete(key: StorageKeys.accessToken),
-      _storage.delete(key: StorageKeys.refreshToken),
-    ]);
+    await Future.wait([_storage.delete(key: StorageKeys.accessToken), _storage.delete(key: StorageKeys.refreshToken)]);
   }
 }

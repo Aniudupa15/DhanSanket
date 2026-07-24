@@ -33,11 +33,18 @@ void main() {
 
   group('login', () {
     test('persists tokens and returns the mapped profile on success', () async {
-      when(() => remote.login(email: any(named: 'email'), password: any(named: 'password')))
-          .thenAnswer((_) async => tokenPair);
+      when(
+        () => remote.login(
+          email: any(named: 'email'),
+          password: any(named: 'password'),
+        ),
+      ).thenAnswer((_) async => tokenPair);
       when(() => remote.getMe()).thenAnswer((_) async => profileDto);
       when(
-        () => tokenStorage.saveTokens(accessToken: any(named: 'accessToken'), refreshToken: any(named: 'refreshToken')),
+        () => tokenStorage.saveTokens(
+          accessToken: any(named: 'accessToken'),
+          refreshToken: any(named: 'refreshToken'),
+        ),
       ).thenAnswer((_) async {});
 
       final result = await repository.login(email: 'test@example.com', password: 'password123');
@@ -48,8 +55,16 @@ void main() {
     });
 
     test('maps a DioException to an Error result', () async {
-      when(() => remote.login(email: any(named: 'email'), password: any(named: 'password'))).thenThrow(
-        DioException(requestOptions: RequestOptions(path: '/auth/login'), type: DioExceptionType.connectionError),
+      when(
+        () => remote.login(
+          email: any(named: 'email'),
+          password: any(named: 'password'),
+        ),
+      ).thenThrow(
+        DioException(
+          requestOptions: RequestOptions(path: '/auth/login'),
+          type: DioExceptionType.connectionError,
+        ),
       );
 
       final result = await repository.login(email: 'test@example.com', password: 'wrong');
@@ -113,7 +128,10 @@ void main() {
     test('still clears local tokens even if the server call fails', () async {
       when(() => tokenStorage.getRefreshToken()).thenAnswer((_) async => 'stored-refresh-token');
       when(() => remote.logout(any())).thenThrow(
-        DioException(requestOptions: RequestOptions(path: '/auth/logout'), type: DioExceptionType.connectionError),
+        DioException(
+          requestOptions: RequestOptions(path: '/auth/logout'),
+          type: DioExceptionType.connectionError,
+        ),
       );
       when(() => tokenStorage.clear()).thenAnswer((_) async {});
 

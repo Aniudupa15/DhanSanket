@@ -13,8 +13,8 @@ class AuthRepositoryImpl implements AuthRepository {
   final SecureTokenStorage _tokenStorage;
 
   AuthRepositoryImpl({required AuthRemoteDataSource remote, required SecureTokenStorage tokenStorage})
-      : _remote = remote,
-        _tokenStorage = tokenStorage;
+    : _remote = remote,
+      _tokenStorage = tokenStorage;
 
   UserProfile _toEntity(UserProfileDto dto) {
     return UserProfile(id: dto.id, email: dto.email, displayName: dto.displayName, createdAt: dto.createdAt);
