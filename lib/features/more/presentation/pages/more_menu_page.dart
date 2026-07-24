@@ -17,6 +17,7 @@ class MoreMenuPage extends StatelessWidget {
       (Icons.grid_view_outlined, 'Market Heatmap', RoutePaths.marketHeatmap),
       (Icons.compare_arrows_outlined, 'Compare Stocks', RoutePaths.compare),
       (Icons.filter_alt_outlined, 'Stock Screener', RoutePaths.screener),
+      (Icons.savings_outlined, 'Dividends', RoutePaths.dividends),
     ];
     return Scaffold(
       appBar: AppBar(title: const Text('More')),

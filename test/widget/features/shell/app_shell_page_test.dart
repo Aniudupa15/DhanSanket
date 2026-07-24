@@ -28,6 +28,10 @@ void main() {
               builder: (context, state) => const Center(child: Text('Portfolio content')),
             ),
             GoRoute(
+              path: '/analysis',
+              builder: (context, state) => const Center(child: Text('Analysis content')),
+            ),
+            GoRoute(
               path: '/more',
               builder: (context, state) => const Center(child: Text('More content')),
             ),
@@ -51,6 +55,16 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Stocks content'), findsOneWidget);
+    expect(find.text('Dashboard content'), findsNothing);
+  });
+
+  testWidgets('tapping Analysis navigates to the analysis tab', (tester) async {
+    await tester.pumpWidget(buildSubject());
+
+    await tester.tap(find.text('Analysis'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Analysis content'), findsOneWidget);
     expect(find.text('Dashboard content'), findsNothing);
   });
 }

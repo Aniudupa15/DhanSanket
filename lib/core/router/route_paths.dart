@@ -8,6 +8,7 @@ class RoutePaths {
   static const String stocks = '/stocks';
   static const String watchlist = '/watchlist';
   static const String portfolio = '/portfolio';
+  static const String analysis = '/analysis';
   static const String more = '/more';
 
   // Top-level (pushed above the shell, hiding the bottom nav) detail routes.
@@ -25,6 +26,7 @@ class RoutePaths {
   static const String alerts = '/alerts';
   static const String notifications = '/notifications';
   static const String chat = '/chat';
+  static const String dividends = '/dividends';
 
   // Phase 4
   static const String profile = '/profile';

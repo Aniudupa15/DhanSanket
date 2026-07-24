@@ -6,22 +6,17 @@ part of 'stock_news_article_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_StockNewsArticleDto _$StockNewsArticleDtoFromJson(Map<String, dynamic> json) =>
-    _StockNewsArticleDto(
-      headline: json['headline'] as String,
-      summary: json['summary'] as String?,
-      source: json['source'] as String,
-      url: json['url'] as String,
-      category: $enumDecode(_$StockNewsCategoryDtoEnumMap, json['category']),
-      relatedSymbols: (json['related_symbols'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
-      publishedAt: DateTime.parse(json['published_at'] as String),
-    );
+_StockNewsArticleDto _$StockNewsArticleDtoFromJson(Map<String, dynamic> json) => _StockNewsArticleDto(
+  headline: json['headline'] as String,
+  summary: json['summary'] as String?,
+  source: json['source'] as String,
+  url: json['url'] as String,
+  category: $enumDecode(_$StockNewsCategoryDtoEnumMap, json['category']),
+  relatedSymbols: (json['related_symbols'] as List<dynamic>).map((e) => e as String).toList(),
+  publishedAt: DateTime.parse(json['published_at'] as String),
+);
 
-Map<String, dynamic> _$StockNewsArticleDtoToJson(
-  _StockNewsArticleDto instance,
-) => <String, dynamic>{
+Map<String, dynamic> _$StockNewsArticleDtoToJson(_StockNewsArticleDto instance) => <String, dynamic>{
   'headline': instance.headline,
   'summary': instance.summary,
   'source': instance.source,

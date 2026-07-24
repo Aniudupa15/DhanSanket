@@ -7,6 +7,9 @@ import '../../features/alerts/presentation/bloc/alert_bloc.dart';
 import '../../features/alerts/presentation/bloc/notification_bloc.dart';
 import '../../features/alerts/presentation/pages/alerts_page.dart';
 import '../../features/alerts/presentation/pages/notifications_page.dart';
+import '../../features/analysis/presentation/bloc/intraday_analysis_bloc.dart';
+import '../../features/analysis/presentation/bloc/long_term_analysis_bloc.dart';
+import '../../features/analysis/presentation/pages/analysis_page.dart';
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../features/auth/presentation/bloc/auth_state.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
@@ -18,6 +21,8 @@ import '../../features/chat/presentation/pages/chat_page.dart';
 import '../../features/compare/presentation/bloc/comparison_bloc.dart';
 import '../../features/compare/presentation/pages/compare_page.dart';
 import '../../features/dashboard/presentation/pages/dashboard_page.dart';
+import '../../features/dividends/presentation/bloc/dividend_bloc.dart';
+import '../../features/dividends/presentation/pages/dividends_page.dart';
 import '../../features/market/domain/entities/mover_category.dart';
 import '../../features/market/presentation/bloc/heatmap_bloc.dart';
 import '../../features/market/presentation/bloc/market_movers_bloc.dart';
@@ -82,6 +87,16 @@ class AppRouter {
             path: RoutePaths.portfolio,
             builder: (context, state) =>
                 BlocProvider(create: (_) => getIt<PortfolioBloc>(), child: const PortfolioListPage()),
+          ),
+          GoRoute(
+            path: RoutePaths.analysis,
+            builder: (context, state) => MultiBlocProvider(
+              providers: [
+                BlocProvider(create: (_) => getIt<IntradayAnalysisBloc>()),
+                BlocProvider(create: (_) => getIt<LongTermAnalysisBloc>()),
+              ],
+              child: const AnalysisPage(),
+            ),
           ),
           GoRoute(path: RoutePaths.more, builder: (context, state) => const MoreMenuPage()),
         ],
@@ -176,6 +191,10 @@ class AppRouter {
         builder: (context, state) => BlocProvider(create: (_) => getIt<ChatBloc>(), child: const ChatPage()),
       ),
       GoRoute(path: RoutePaths.profile, builder: (context, state) => const ProfilePage()),
+      GoRoute(
+        path: RoutePaths.dividends,
+        builder: (context, state) => BlocProvider(create: (_) => getIt<DividendBloc>(), child: const DividendsPage()),
+      ),
     ],
   );
 

@@ -15,12 +15,11 @@ _OhlcvBarDto _$OhlcvBarDtoFromJson(Map<String, dynamic> json) => _OhlcvBarDto(
   volume: (json['volume'] as num).toInt(),
 );
 
-Map<String, dynamic> _$OhlcvBarDtoToJson(_OhlcvBarDto instance) =>
-    <String, dynamic>{
-      'trade_date': instance.tradeDate.toIso8601String(),
-      'open': const DecimalConverter().toJson(instance.open),
-      'high': const DecimalConverter().toJson(instance.high),
-      'low': const DecimalConverter().toJson(instance.low),
-      'close': const DecimalConverter().toJson(instance.close),
-      'volume': instance.volume,
-    };
+Map<String, dynamic> _$OhlcvBarDtoToJson(_OhlcvBarDto instance) => <String, dynamic>{
+  'trade_date': instance.tradeDate.toIso8601String(),
+  'open': const DecimalConverter().toJson(instance.open),
+  'high': const DecimalConverter().toJson(instance.high),
+  'low': const DecimalConverter().toJson(instance.low),
+  'close': const DecimalConverter().toJson(instance.close),
+  'volume': instance.volume,
+};

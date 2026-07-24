@@ -9,9 +9,7 @@ part of 'macd_dto.dart';
 _MacdDto _$MacdDtoFromJson(Map<String, dynamic> json) => _MacdDto(
   macd: const NullableDecimalConverter().fromJson(json['macd'] as String?),
   signal: const NullableDecimalConverter().fromJson(json['signal'] as String?),
-  histogram: const NullableDecimalConverter().fromJson(
-    json['histogram'] as String?,
-  ),
+  histogram: const NullableDecimalConverter().fromJson(json['histogram'] as String?),
 );
 
 Map<String, dynamic> _$MacdDtoToJson(_MacdDto instance) => <String, dynamic>{
