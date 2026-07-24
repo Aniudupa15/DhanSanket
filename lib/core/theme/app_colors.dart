@@ -23,11 +23,9 @@ class AppColors {
   static const Color _neutralChangeLight = Color(0xFF757575);
   static const Color _neutralChangeDark = Color(0xFF9E9E9E);
 
-  static Color positiveChange(BuildContext context) =>
-      _isDark(context) ? _positiveChangeDark : _positiveChangeLight;
+  static Color positiveChange(BuildContext context) => _isDark(context) ? _positiveChangeDark : _positiveChangeLight;
 
-  static Color negativeChange(BuildContext context) =>
-      _isDark(context) ? _negativeChangeDark : _negativeChangeLight;
+  static Color negativeChange(BuildContext context) => _isDark(context) ? _negativeChangeDark : _negativeChangeLight;
 
   static Color neutralChange(BuildContext context) => _isDark(context) ? _neutralChangeDark : _neutralChangeLight;
 

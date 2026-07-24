@@ -15,19 +15,15 @@ class AuthInterceptor extends Interceptor {
   final SecureTokenStorage _tokenStorage;
   final TokenRefreshCoordinator _refreshCoordinator;
 
-  static const _noAuthPaths = {
-    ApiEndpoints.register,
-    ApiEndpoints.login,
-    ApiEndpoints.refresh,
-  };
+  static const _noAuthPaths = {ApiEndpoints.register, ApiEndpoints.login, ApiEndpoints.refresh};
 
   AuthInterceptor({
     required Dio dio,
     required SecureTokenStorage tokenStorage,
     required TokenRefreshCoordinator refreshCoordinator,
-  })  : _dio = dio,
-        _tokenStorage = tokenStorage,
-        _refreshCoordinator = refreshCoordinator;
+  }) : _dio = dio,
+       _tokenStorage = tokenStorage,
+       _refreshCoordinator = refreshCoordinator;
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
@@ -64,10 +60,7 @@ class AuthInterceptor extends Interceptor {
     final accessToken = await _tokenStorage.getAccessToken();
     final options = Options(
       method: requestOptions.method,
-      headers: {
-        ...requestOptions.headers,
-        if (accessToken != null) 'Authorization': 'Bearer $accessToken',
-      },
+      headers: {...requestOptions.headers, if (accessToken != null) 'Authorization': 'Bearer $accessToken'},
     );
     return _dio.request<dynamic>(
       requestOptions.path,

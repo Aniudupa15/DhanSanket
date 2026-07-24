@@ -11,11 +11,26 @@ void main() {
         ShellRoute(
           builder: (context, state, child) => AppShellPage(child: child),
           routes: [
-            GoRoute(path: '/dashboard', builder: (context, state) => const Center(child: Text('Dashboard content'))),
-            GoRoute(path: '/stocks', builder: (context, state) => const Center(child: Text('Stocks content'))),
-            GoRoute(path: '/watchlist', builder: (context, state) => const Center(child: Text('Watchlist content'))),
-            GoRoute(path: '/portfolio', builder: (context, state) => const Center(child: Text('Portfolio content'))),
-            GoRoute(path: '/more', builder: (context, state) => const Center(child: Text('More content'))),
+            GoRoute(
+              path: '/dashboard',
+              builder: (context, state) => const Center(child: Text('Dashboard content')),
+            ),
+            GoRoute(
+              path: '/stocks',
+              builder: (context, state) => const Center(child: Text('Stocks content')),
+            ),
+            GoRoute(
+              path: '/watchlist',
+              builder: (context, state) => const Center(child: Text('Watchlist content')),
+            ),
+            GoRoute(
+              path: '/portfolio',
+              builder: (context, state) => const Center(child: Text('Portfolio content')),
+            ),
+            GoRoute(
+              path: '/more',
+              builder: (context, state) => const Center(child: Text('More content')),
+            ),
           ],
         ),
       ],

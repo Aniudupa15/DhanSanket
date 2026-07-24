@@ -25,7 +25,9 @@ void main() {
   });
 
   Widget buildSubject() {
-    return MaterialApp(home: BlocProvider<AuthBloc>.value(value: authBloc, child: const RegisterPage()));
+    return MaterialApp(
+      home: BlocProvider<AuthBloc>.value(value: authBloc, child: const RegisterPage()),
+    );
   }
 
   testWidgets('shows validation errors when submitting an empty form', (tester) async {

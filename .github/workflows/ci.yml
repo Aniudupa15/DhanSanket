@@ -1,0 +1,86 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Analyze & test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate code (freezed/json_serializable)
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Verify formatting
+        # Generated .g.dart/.freezed.dart files are reformatted by build_runner
+        # itself at its own (unconfigurable) line length, unrelated to this
+        # project's 120-char convention for hand-written code - excluded here
+        # via pathspec rather than checked, since they'd never match either way.
+        run: |
+          dart format --line-length=120 lib test
+          git diff --exit-code -- lib test ':!**/*.g.dart' ':!**/*.freezed.dart'
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Run tests
+        run: flutter test
+
+  build:
+    name: Build (${{ matrix.target }})
+    needs: test
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - target: apk
+            command: build apk --release
+            output: build/app/outputs/flutter-apk/app-release.apk
+          - target: appbundle
+            command: build appbundle --release
+            output: build/app/outputs/bundle/release/app-release.aab
+          - target: web
+            command: build web --release
+            output: build/web
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate code (freezed/json_serializable)
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Enable web
+        if: matrix.target == 'web'
+        run: flutter config --enable-web
+
+      - name: Build
+        run: flutter ${{ matrix.command }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dhan-sanket-${{ matrix.target }}
+          path: ${{ matrix.output }}
+          if-no-files-found: error

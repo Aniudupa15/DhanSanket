@@ -21,9 +21,9 @@ class TokenRefreshCoordinator {
     required Dio bareDio,
     required SecureTokenStorage tokenStorage,
     required AuthSessionNotifier sessionNotifier,
-  })  : _bareDio = bareDio,
-        _tokenStorage = tokenStorage,
-        _sessionNotifier = sessionNotifier;
+  }) : _bareDio = bareDio,
+       _tokenStorage = tokenStorage,
+       _sessionNotifier = sessionNotifier;
 
   /// Resolves true if new tokens are persisted and the original request
   /// should be retried; false if the session is over and the caller should

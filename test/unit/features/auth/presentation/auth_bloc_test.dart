@@ -52,8 +52,12 @@ void main() {
   blocTest<AuthBloc, AuthState>(
     'login: emits authenticating then authenticated on success',
     build: () {
-      when(() => repository.login(email: any(named: 'email'), password: any(named: 'password')))
-          .thenAnswer((_) async => Success(user));
+      when(
+        () => repository.login(
+          email: any(named: 'email'),
+          password: any(named: 'password'),
+        ),
+      ).thenAnswer((_) async => Success(user));
       return AuthBloc(repository: repository, sessionNotifier: sessionNotifier);
     },
     act: (bloc) => bloc.add(const AuthLoginRequested(email: 'test@example.com', password: 'password123')),
@@ -66,8 +70,12 @@ void main() {
   blocTest<AuthBloc, AuthState>(
     'login: emits authenticating then unauthenticated with a failure on error',
     build: () {
-      when(() => repository.login(email: any(named: 'email'), password: any(named: 'password')))
-          .thenAnswer((_) async => const Error(UnauthorizedFailure('Invalid credentials')));
+      when(
+        () => repository.login(
+          email: any(named: 'email'),
+          password: any(named: 'password'),
+        ),
+      ).thenAnswer((_) async => const Error(UnauthorizedFailure('Invalid credentials')));
       return AuthBloc(repository: repository, sessionNotifier: sessionNotifier);
     },
     act: (bloc) => bloc.add(const AuthLoginRequested(email: 'test@example.com', password: 'wrong')),
@@ -92,30 +100,37 @@ void main() {
   blocTest<AuthBloc, AuthState>(
     'updateProfile: emits the updated user on success without touching status',
     build: () {
-      final updated = UserProfile(id: 'u1', email: 'new@example.com', displayName: 'New Name', createdAt: user.createdAt);
+      final updated = UserProfile(
+        id: 'u1',
+        email: 'new@example.com',
+        displayName: 'New Name',
+        createdAt: user.createdAt,
+      );
       when(
-        () => repository.updateProfile(displayName: any(named: 'displayName'), email: any(named: 'email')),
+        () => repository.updateProfile(
+          displayName: any(named: 'displayName'),
+          email: any(named: 'email'),
+        ),
       ).thenAnswer((_) async => Success(updated));
       return AuthBloc(repository: repository, sessionNotifier: sessionNotifier);
     },
     act: (bloc) => bloc.add(const AuthProfileUpdateRequested(displayName: 'New Name', email: 'new@example.com')),
-    expect: () => [
-      isA<AuthState>().having((s) => s.user?.displayName, 'user.displayName', 'New Name'),
-    ],
+    expect: () => [isA<AuthState>().having((s) => s.user?.displayName, 'user.displayName', 'New Name')],
   );
 
   blocTest<AuthBloc, AuthState>(
     'updateProfile: emits a failure on error',
     build: () {
       when(
-        () => repository.updateProfile(displayName: any(named: 'displayName'), email: any(named: 'email')),
+        () => repository.updateProfile(
+          displayName: any(named: 'displayName'),
+          email: any(named: 'email'),
+        ),
       ).thenAnswer((_) async => const Error(ValidationFailure('Email already in use', {})));
       return AuthBloc(repository: repository, sessionNotifier: sessionNotifier);
     },
     act: (bloc) => bloc.add(const AuthProfileUpdateRequested(email: 'taken@example.com')),
-    expect: () => [
-      isA<AuthState>().having((s) => s.failure?.message, 'failure message', 'Email already in use'),
-    ],
+    expect: () => [isA<AuthState>().having((s) => s.failure?.message, 'failure message', 'Email already in use')],
   );
 
   blocTest<AuthBloc, AuthState>(

@@ -38,52 +38,52 @@ class _DashboardPageState extends State<DashboardPage> {
           return switch (state) {
             DashboardInitial() || DashboardLoading() => const AppLoadingView(),
             DashboardError(:final failure) => AppErrorView(
-                message: failure.message,
-                onRetry: () => context.read<DashboardBloc>().add(const DashboardRequested()),
-              ),
+              message: failure.message,
+              onRetry: () => context.read<DashboardBloc>().add(const DashboardRequested()),
+            ),
             DashboardLoaded(:final snapshot) => RefreshIndicator(
-                onRefresh: () async {
-                  final bloc = context.read<DashboardBloc>();
-                  bloc.add(const DashboardRefreshRequested());
-                  await bloc.stream.firstWhere((s) => s is! DashboardLoading);
-                },
-                child: ListView(
-                  children: [
-                    const SizedBox(height: 8),
-                    MarketStatusBanner(statuses: snapshot.marketStatus),
-                    const SizedBox(height: 8),
-                    IndicesStrip(indices: snapshot.indices),
-                    MarketMoverListSection(
-                      title: 'Top Gainers',
-                      movers: snapshot.gainers,
-                      onSeeAll: () => context.push(RoutePaths.marketMovers('gainers')),
-                    ),
-                    MarketMoverListSection(
-                      title: 'Top Losers',
-                      movers: snapshot.losers,
-                      onSeeAll: () => context.push(RoutePaths.marketMovers('losers')),
-                    ),
-                    MarketMoverListSection(
-                      title: 'Most Active',
-                      movers: snapshot.mostActive,
-                      onSeeAll: () => context.push(RoutePaths.marketMovers('most-active')),
-                    ),
-                    MarketMoverListSection(
-                      title: '52-Week High',
-                      movers: snapshot.fiftyTwoWeekHigh,
-                      onSeeAll: () => context.push(RoutePaths.marketMovers('fifty-two-week-high')),
-                    ),
-                    MarketMoverListSection(
-                      title: '52-Week Low',
-                      movers: snapshot.fiftyTwoWeekLow,
-                      onSeeAll: () => context.push(RoutePaths.marketMovers('fifty-two-week-low')),
-                    ),
-                    LatestNewsPreview(articles: snapshot.latestNews),
-                    DashboardNotesBanner(notes: snapshot.notes),
-                    const SizedBox(height: 24),
-                  ],
-                ),
+              onRefresh: () async {
+                final bloc = context.read<DashboardBloc>();
+                bloc.add(const DashboardRefreshRequested());
+                await bloc.stream.firstWhere((s) => s is! DashboardLoading);
+              },
+              child: ListView(
+                children: [
+                  const SizedBox(height: 8),
+                  MarketStatusBanner(statuses: snapshot.marketStatus),
+                  const SizedBox(height: 8),
+                  IndicesStrip(indices: snapshot.indices),
+                  MarketMoverListSection(
+                    title: 'Top Gainers',
+                    movers: snapshot.gainers,
+                    onSeeAll: () => context.push(RoutePaths.marketMovers('gainers')),
+                  ),
+                  MarketMoverListSection(
+                    title: 'Top Losers',
+                    movers: snapshot.losers,
+                    onSeeAll: () => context.push(RoutePaths.marketMovers('losers')),
+                  ),
+                  MarketMoverListSection(
+                    title: 'Most Active',
+                    movers: snapshot.mostActive,
+                    onSeeAll: () => context.push(RoutePaths.marketMovers('most-active')),
+                  ),
+                  MarketMoverListSection(
+                    title: '52-Week High',
+                    movers: snapshot.fiftyTwoWeekHigh,
+                    onSeeAll: () => context.push(RoutePaths.marketMovers('fifty-two-week-high')),
+                  ),
+                  MarketMoverListSection(
+                    title: '52-Week Low',
+                    movers: snapshot.fiftyTwoWeekLow,
+                    onSeeAll: () => context.push(RoutePaths.marketMovers('fifty-two-week-low')),
+                  ),
+                  LatestNewsPreview(articles: snapshot.latestNews),
+                  DashboardNotesBanner(notes: snapshot.notes),
+                  const SizedBox(height: 24),
+                ],
               ),
+            ),
           };
         },
       ),

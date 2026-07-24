@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 
 import '../core/network/auth_interceptor.dart';
 import '../core/network/auth_session_notifier.dart';
+import '../core/network/connectivity_service.dart';
 import '../core/network/dio_client.dart';
 import '../core/network/token_refresh_coordinator.dart';
 import '../core/router/app_router.dart';
@@ -77,6 +78,7 @@ final getIt = GetIt.instance;
 void setupInjector() {
   getIt.registerLazySingleton<SecureTokenStorage>(() => SecureTokenStorage());
   getIt.registerLazySingleton<AuthSessionNotifier>(() => AuthSessionNotifier());
+  getIt.registerLazySingleton<ConnectivityService>(() => ConnectivityService());
 
   // Two Dio instances: `mainDio` (gets the auth interceptor, used by every
   // feature) and `bareDio` (no interceptor - used exclusively by
@@ -94,12 +96,12 @@ void setupInjector() {
   );
 
   getIt<Dio>(instanceName: _mainDio).interceptors.add(
-        AuthInterceptor(
-          dio: getIt<Dio>(instanceName: _mainDio),
-          tokenStorage: getIt<SecureTokenStorage>(),
-          refreshCoordinator: getIt<TokenRefreshCoordinator>(),
-        ),
-      );
+    AuthInterceptor(
+      dio: getIt<Dio>(instanceName: _mainDio),
+      tokenStorage: getIt<SecureTokenStorage>(),
+      refreshCoordinator: getIt<TokenRefreshCoordinator>(),
+    ),
+  );
 
   // Auth feature
   getIt.registerLazySingleton<AuthRemoteDataSource>(() => AuthRemoteDataSource(getIt<Dio>(instanceName: _mainDio)));
@@ -154,9 +156,7 @@ void setupInjector() {
   getIt.registerFactory<NewsBloc>(() => NewsBloc(repository: getIt<NewsRepository>()));
 
   // Market feature (movers lists + heatmap)
-  getIt.registerLazySingleton<MarketRemoteDataSource>(
-    () => MarketRemoteDataSource(getIt<Dio>(instanceName: _mainDio)),
-  );
+  getIt.registerLazySingleton<MarketRemoteDataSource>(() => MarketRemoteDataSource(getIt<Dio>(instanceName: _mainDio)));
   getIt.registerLazySingleton<MarketRepository>(() => MarketRepositoryImpl(getIt<MarketRemoteDataSource>()));
   getIt.registerFactory<MarketMoversBloc>(() => MarketMoversBloc(repository: getIt<MarketRepository>()));
   getIt.registerFactory<HeatmapBloc>(() => HeatmapBloc(repository: getIt<MarketRepository>()));

@@ -30,7 +30,9 @@ class DashboardNotesBanner extends StatelessWidget {
               children: [
                 Icon(Icons.info_outline, size: 16, color: foreground),
                 const SizedBox(width: 8),
-                Expanded(child: Text(note, style: TextStyle(color: foreground, fontSize: 12))),
+                Expanded(
+                  child: Text(note, style: TextStyle(color: foreground, fontSize: 12)),
+                ),
               ],
             ),
           );

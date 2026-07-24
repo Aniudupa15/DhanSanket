@@ -33,12 +33,12 @@ class _RegisterPageState extends State<RegisterPage> {
   void _submit() {
     if (_formKey.currentState!.validate()) {
       context.read<AuthBloc>().add(
-            AuthRegisterRequested(
-              email: _emailController.text.trim(),
-              password: _passwordController.text,
-              displayName: _displayNameController.text.trim(),
-            ),
-          );
+        AuthRegisterRequested(
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+          displayName: _displayNameController.text.trim(),
+        ),
+      );
     }
   }
 

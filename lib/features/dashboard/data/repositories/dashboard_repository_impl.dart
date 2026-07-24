@@ -49,7 +49,12 @@ class DashboardRepositoryImpl implements DashboardRepository {
   }
 
   IndexQuote _indexToEntity(IndexQuoteDto dto) {
-    return IndexQuote(indexName: dto.indexName, lastPrice: dto.lastPrice, change: dto.change, changePercent: dto.changePercent);
+    return IndexQuote(
+      indexName: dto.indexName,
+      lastPrice: dto.lastPrice,
+      change: dto.change,
+      changePercent: dto.changePercent,
+    );
   }
 
   MarketMover _moverToEntity(MarketMoverDto dto) {

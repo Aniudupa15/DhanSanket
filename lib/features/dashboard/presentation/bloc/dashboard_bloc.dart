@@ -8,9 +8,7 @@ import 'dashboard_state.dart';
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   final DashboardRepository _repository;
 
-  DashboardBloc({required DashboardRepository repository})
-      : _repository = repository,
-        super(const DashboardInitial()) {
+  DashboardBloc({required DashboardRepository repository}) : _repository = repository, super(const DashboardInitial()) {
     on<DashboardRequested>(_onRequested);
     on<DashboardRefreshRequested>(_onRequested);
   }

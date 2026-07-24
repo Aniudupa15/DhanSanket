@@ -13,11 +13,7 @@ class AuthRemoteDataSource {
 
   AuthRemoteDataSource(this._dio);
 
-  Future<TokenPairDto> register({
-    required String email,
-    required String password,
-    required String displayName,
-  }) async {
+  Future<TokenPairDto> register({required String email, required String password, required String displayName}) async {
     final response = await _dio.post<Map<String, dynamic>>(
       ApiEndpoints.register,
       data: {'email': email, 'password': password, 'display_name': displayName},
@@ -45,10 +41,7 @@ class AuthRemoteDataSource {
   Future<UserProfileDto> updateMe({String? displayName, String? email}) async {
     final response = await _dio.patch<Map<String, dynamic>>(
       ApiEndpoints.me,
-      data: {
-        'display_name': ?displayName,
-        'email': ?email,
-      },
+      data: {'display_name': ?displayName, 'email': ?email},
     );
     return UserProfileDto.fromJson(response.data!);
   }

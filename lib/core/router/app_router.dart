@@ -70,24 +70,18 @@ class AppRouter {
           GoRoute(path: RoutePaths.dashboard, builder: (context, state) => const DashboardPage()),
           GoRoute(
             path: RoutePaths.stocks,
-            builder: (context, state) => BlocProvider(
-              create: (_) => getIt<StockSearchBloc>(),
-              child: const StockSearchPage(),
-            ),
+            builder: (context, state) =>
+                BlocProvider(create: (_) => getIt<StockSearchBloc>(), child: const StockSearchPage()),
           ),
           GoRoute(
             path: RoutePaths.watchlist,
-            builder: (context, state) => BlocProvider(
-              create: (_) => getIt<WatchlistBloc>(),
-              child: const WatchlistListPage(),
-            ),
+            builder: (context, state) =>
+                BlocProvider(create: (_) => getIt<WatchlistBloc>(), child: const WatchlistListPage()),
           ),
           GoRoute(
             path: RoutePaths.portfolio,
-            builder: (context, state) => BlocProvider(
-              create: (_) => getIt<PortfolioBloc>(),
-              child: const PortfolioListPage(),
-            ),
+            builder: (context, state) =>
+                BlocProvider(create: (_) => getIt<PortfolioBloc>(), child: const PortfolioListPage()),
           ),
           GoRoute(path: RoutePaths.more, builder: (context, state) => const MoreMenuPage()),
         ],
@@ -162,8 +156,7 @@ class AppRouter {
       ),
       GoRoute(
         path: RoutePaths.compare,
-        builder: (context, state) =>
-            BlocProvider(create: (_) => getIt<ComparisonBloc>(), child: const ComparePage()),
+        builder: (context, state) => BlocProvider(create: (_) => getIt<ComparisonBloc>(), child: const ComparePage()),
       ),
       GoRoute(
         path: RoutePaths.screener,

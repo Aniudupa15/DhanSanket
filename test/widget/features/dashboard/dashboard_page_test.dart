@@ -37,7 +37,10 @@ void main() {
     bloc = MockDashboardBloc();
     notificationRepository = MockNotificationRepository();
     when(
-      () => notificationRepository.list(unreadOnly: any(named: 'unreadOnly'), limit: any(named: 'limit')),
+      () => notificationRepository.list(
+        unreadOnly: any(named: 'unreadOnly'),
+        limit: any(named: 'limit'),
+      ),
     ).thenAnswer((_) async => const Success([]));
     getIt.registerSingleton<NotificationRepository>(notificationRepository);
   });
@@ -47,7 +50,9 @@ void main() {
   });
 
   Widget buildSubject() {
-    return MaterialApp(home: BlocProvider<DashboardBloc>.value(value: bloc, child: const DashboardPage()));
+    return MaterialApp(
+      home: BlocProvider<DashboardBloc>.value(value: bloc, child: const DashboardPage()),
+    );
   }
 
   testWidgets('shows a loading indicator while loading', (tester) async {
