@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../domain/entities/news_article.dart';
+import '../../../../core/entities/news_article.dart';
 
 class LatestNewsPreview extends StatelessWidget {
   final List<NewsArticle> articles;

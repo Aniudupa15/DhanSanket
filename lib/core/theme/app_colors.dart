@@ -12,9 +12,26 @@ class AppColors {
 
   static ColorScheme get darkScheme => ColorScheme.fromSeed(seedColor: _seed, brightness: Brightness.dark);
 
-  static const Color positiveChange = Color(0xFF2E7D32);
-  static const Color negativeChange = Color(0xFFC62828);
-  static const Color neutralChange = Color(0xFF757575);
+  // Gainer/loser/neutral shades are theme-aware, not fixed constants - a
+  // single fixed shade can't clear WCAG AA (4.5:1) against both a white
+  // light-mode surface and a near-black dark-mode one at the same time, so
+  // dark mode gets a brighter variant.
+  static const Color _positiveChangeLight = Color(0xFF2E7D32);
+  static const Color _positiveChangeDark = Color(0xFF66BB6A);
+  static const Color _negativeChangeLight = Color(0xFFC62828);
+  static const Color _negativeChangeDark = Color(0xFFE57373);
+  static const Color _neutralChangeLight = Color(0xFF757575);
+  static const Color _neutralChangeDark = Color(0xFF9E9E9E);
+
+  static Color positiveChange(BuildContext context) =>
+      _isDark(context) ? _positiveChangeDark : _positiveChangeLight;
+
+  static Color negativeChange(BuildContext context) =>
+      _isDark(context) ? _negativeChangeDark : _negativeChangeLight;
+
+  static Color neutralChange(BuildContext context) => _isDark(context) ? _neutralChangeDark : _neutralChangeLight;
+
+  static bool _isDark(BuildContext context) => Theme.of(context).brightness == Brightness.dark;
 
   static const Color cautionBannerLight = Color(0xFFFFF3CD);
   static const Color cautionBannerDark = Color(0xFF4A3B00);

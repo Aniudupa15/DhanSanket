@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 
+import '../../../../core/entities/market_mover.dart';
+import '../../../../core/entities/news_article.dart';
 import '../../../../core/error/result.dart';
 import '../../../../core/network/dio_error_mapper.dart';
 import '../../domain/entities/dashboard_snapshot.dart';
 import '../../domain/entities/index_quote.dart';
-import '../../domain/entities/market_mover.dart';
 import '../../domain/entities/market_status.dart';
-import '../../domain/entities/news_article.dart';
 import '../../domain/repositories/dashboard_repository.dart';
 import '../datasources/dashboard_remote_data_source.dart';
 import '../dto/dashboard_dto.dart';

@@ -1,7 +1,7 @@
+import '../../../../core/entities/market_mover.dart';
+import '../../../../core/entities/news_article.dart';
 import 'index_quote.dart';
-import 'market_mover.dart';
 import 'market_status.dart';
-import 'news_article.dart';
 
 class DashboardSnapshot {
   final List<MarketStatus> marketStatus;

@@ -38,6 +38,16 @@ class AuthLogoutRequested extends AuthEvent {
   const AuthLogoutRequested();
 }
 
+class AuthProfileUpdateRequested extends AuthEvent {
+  final String? displayName;
+  final String? email;
+
+  const AuthProfileUpdateRequested({this.displayName, this.email});
+
+  @override
+  List<Object?> get props => [displayName, email];
+}
+
 /// Internal event fired when [AuthSessionNotifier] reports that a token
 /// refresh failed irrecoverably (see core/network/token_refresh_coordinator.dart).
 class AuthSessionExpired extends AuthEvent {
