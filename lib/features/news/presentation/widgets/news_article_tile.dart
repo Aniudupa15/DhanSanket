@@ -11,23 +11,90 @@ class NewsArticleTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(article.headline, maxLines: 2, overflow: TextOverflow.ellipsis),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (article.summary != null)
-            Padding(
-              padding: const EdgeInsets.only(top: 4, bottom: 4),
-              child: Text(article.summary!, maxLines: 2, overflow: TextOverflow.ellipsis),
+    final theme = Theme.of(context);
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      child: Card(
+        margin: EdgeInsets.zero,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () => launchUrl(Uri.parse(article.url), mode: LaunchMode.externalApplication),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.primaryContainer,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        article.category.name.toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: theme.colorScheme.onPrimaryContainer,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      DateFormat.yMMMd().format(article.publishedAt.toLocal()),
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  article.headline,
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    height: 1.3,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                if (article.summary != null) ...[
+                  const SizedBox(height: 6),
+                  Text(
+                    article.summary!,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                      height: 1.4,
+                    ),
+                  ),
+                ],
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Icon(Icons.newspaper_rounded, size: 14, color: theme.colorScheme.primary),
+                    const SizedBox(width: 4),
+                    Text(
+                      article.source,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: theme.colorScheme.primary,
+                      ),
+                    ),
+                    const Spacer(),
+                    Icon(Icons.open_in_new, size: 14, color: theme.colorScheme.onSurfaceVariant),
+                  ],
+                ),
+              ],
             ),
-          Text(
-            '${article.source} · ${DateFormat.yMMMd().add_jm().format(article.publishedAt.toLocal())}',
-            style: Theme.of(context).textTheme.bodySmall,
           ),
-        ],
+        ),
       ),
-      onTap: () => launchUrl(Uri.parse(article.url), mode: LaunchMode.externalApplication),
     );
   }
 }
+

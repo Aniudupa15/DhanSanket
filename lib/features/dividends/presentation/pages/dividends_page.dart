@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/route_paths.dart';
+import '../../../../core/widgets/app_empty_state.dart';
 import '../../../../core/widgets/app_error_view.dart';
-import '../../../../core/widgets/app_loading_view.dart';
+import '../../../../core/widgets/app_skeleton_loader.dart';
 import '../bloc/dividend_bloc.dart';
 import '../bloc/dividend_event.dart';
 import '../bloc/dividend_state.dart';
@@ -34,11 +35,11 @@ class _DividendsPageState extends State<DividendsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Dividends')),
+      appBar: AppBar(title: const Text('Dividend Calendar & Recommendations')),
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -68,21 +69,29 @@ class _DividendsPageState extends State<DividendsPage> {
             child: BlocBuilder<DividendBloc, DividendState>(
               builder: (context, state) {
                 return switch (state) {
-                  DividendInitial() || DividendLoading() => const AppLoadingView(),
+                  DividendInitial() || DividendLoading() => ListView.separated(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      itemCount: 4,
+                      separatorBuilder: (_, __) => const Divider(height: 1, indent: 68),
+                      itemBuilder: (_, __) => const StockTileSkeleton(),
+                    ),
                   DividendError(:final failure) => AppErrorView(message: failure.message, onRetry: _apply),
-                  DividendLoaded(:final recommendations) =>
-                    recommendations.isEmpty
-                        ? const Center(child: Text('No dividend data right now.'))
-                        : RefreshIndicator(
-                            onRefresh: () async => _apply(),
-                            child: ListView.builder(
-                              itemCount: recommendations.length,
-                              itemBuilder: (context, index) => DividendRecommendationTile(
-                                recommendation: recommendations[index],
-                                onTap: () => context.push(RoutePaths.stockDetail(recommendations[index].symbol)),
-                              ),
+                  DividendLoaded(:final recommendations) => recommendations.isEmpty
+                      ? const AppEmptyState(
+                          icon: Icons.currency_rupee,
+                          title: 'No dividend data',
+                          message: 'No upcoming or high-yield dividend recommendations match your filter.',
+                        )
+                      : RefreshIndicator(
+                          onRefresh: () async => _apply(),
+                          child: ListView.builder(
+                            itemCount: recommendations.length,
+                            itemBuilder: (context, index) => DividendRecommendationTile(
+                              recommendation: recommendations[index],
+                              onTap: () => context.push(RoutePaths.stockDetail(recommendations[index].symbol)),
                             ),
                           ),
+                        ),
                 };
               },
             ),
@@ -92,3 +101,4 @@ class _DividendsPageState extends State<DividendsPage> {
     );
   }
 }
+

@@ -65,6 +65,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final user = context.watch<AuthBloc>().state.user;
+    final initials = (user?.displayName.isNotEmpty == true)
+        ? (user!.displayName.length > 2 ? user.displayName.substring(0, 2).toUpperCase() : user.displayName.toUpperCase())
+        : 'DS';
+
     return Scaffold(
       appBar: AppBar(title: const Text('Profile')),
       body: BlocListener<AuthBloc, AuthState>(
@@ -79,30 +85,43 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                BlocBuilder<AuthBloc, AuthState>(
-                  buildWhen: (previous, current) => previous.user != current.user,
-                  builder: (context, state) {
-                    final createdAt = state.user?.createdAt;
-                    return createdAt == null
-                        ? const SizedBox.shrink()
-                        : Padding(
-                            padding: const EdgeInsets.only(bottom: 16),
-                            child: Text(
-                              'Member since ${DateFormat.yMMMd().format(createdAt.toLocal())}',
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                          );
-                  },
+                Center(
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 36,
+                        backgroundColor: theme.colorScheme.primaryContainer,
+                        child: Text(
+                          initials,
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: theme.colorScheme.onPrimaryContainer,
+                          ),
+                        ),
+                      ),
+                      if (user?.createdAt != null) ...[
+                        const SizedBox(height: 8),
+                        Text(
+                          'Member since ${DateFormat.yMMMd().format(user!.createdAt!.toLocal())}',
+                          style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                        ),
+                      ],
+                    ],
+                  ),
                 ),
+                const SizedBox(height: 24),
                 AuthTextField(
                   controller: _displayNameController,
                   label: 'Display name',
+                  prefixIcon: Icons.person_outline,
                   validator: (value) => (value == null || value.trim().isEmpty) ? 'Enter a display name' : null,
                 ),
                 const SizedBox(height: 16),
                 AuthTextField(
                   controller: _emailController,
                   label: 'Email',
+                  prefixIcon: Icons.email_outlined,
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) => (value == null || !value.contains('@')) ? 'Enter a valid email' : null,
                 ),
@@ -113,7 +132,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   },
                 ),
                 const SizedBox(height: 12),
-                OutlinedButton(onPressed: _confirmLogout, child: const Text('Log out')),
+                OutlinedButton(
+                  onPressed: _confirmLogout,
+                  child: const Text('Log out'),
+                ),
               ],
             ),
           ),
@@ -122,3 +144,5 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
+
+

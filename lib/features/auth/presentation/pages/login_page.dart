@@ -38,6 +38,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       body: SafeArea(
         child: BlocListener<AuthBloc, AuthState>(
@@ -47,25 +49,53 @@ class _LoginPageState extends State<LoginPage> {
           },
           child: Center(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.all(28),
               child: Form(
                 key: _formKey,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text('DhanSanket', style: Theme.of(context).textTheme.headlineSmall, textAlign: TextAlign.center),
-                    const SizedBox(height: 32),
+                    CircleAvatar(
+                      radius: 36,
+                      backgroundColor: theme.colorScheme.primaryContainer,
+                      child: Icon(
+                        Icons.trending_up_rounded,
+                        size: 40,
+                        color: theme.colorScheme.primary,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'DhanSanket',
+                      style: theme.textTheme.headlineMedium?.copyWith(
+                        fontWeight: FontWeight.w800,
+                        color: theme.colorScheme.primary,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      'Indian Stock Market Analytics & Portfolio Tracker',
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 36),
                     AuthTextField(
                       controller: _emailController,
-                      label: 'Email',
+                      label: 'Email Address',
+                      prefixIcon: Icons.email_outlined,
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) => (value == null || !value.contains('@')) ? 'Enter a valid email' : null,
                     ),
+
                     const SizedBox(height: 16),
                     AuthTextField(
                       controller: _passwordController,
                       label: 'Password',
+                      prefixIcon: Icons.lock_outline,
                       obscureText: true,
                       validator: (value) => (value == null || value.isEmpty) ? 'Enter your password' : null,
                     ),
@@ -79,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                         );
                       },
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 16),
                     TextButton(
                       onPressed: () => context.go(RoutePaths.register),
                       child: const Text("Don't have an account? Register"),
@@ -94,3 +124,4 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+

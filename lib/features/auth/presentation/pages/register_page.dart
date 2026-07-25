@@ -44,8 +44,10 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Create account')),
+      appBar: AppBar(title: const Text('Create Account')),
       body: SafeArea(
         child: BlocListener<AuthBloc, AuthState>(
           listenWhen: (previous, current) => current.failure != null,
@@ -61,9 +63,28 @@ class _RegisterPageState extends State<RegisterPage> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    CircleAvatar(
+                      radius: 36,
+                      backgroundColor: theme.colorScheme.primaryContainer,
+                      child: Icon(Icons.person_add_outlined, size: 40, color: theme.colorScheme.primary),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Join DhanSanket',
+                      style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      'Create a free account to track watchlists and AI signals',
+                      style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 32),
                     AuthTextField(
                       controller: _displayNameController,
                       label: 'Display name',
+                      prefixIcon: Icons.person_outline,
                       validator: (value) {
                         final length = value?.trim().length ?? 0;
                         return (length < 1 || length > 128) ? 'Enter a name (1-128 characters)' : null;
@@ -73,6 +94,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     AuthTextField(
                       controller: _emailController,
                       label: 'Email',
+                      prefixIcon: Icons.email_outlined,
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) => (value == null || !value.contains('@')) ? 'Enter a valid email' : null,
                     ),
@@ -80,12 +102,14 @@ class _RegisterPageState extends State<RegisterPage> {
                     AuthTextField(
                       controller: _passwordController,
                       label: 'Password',
+                      prefixIcon: Icons.lock_outline,
                       obscureText: true,
                       validator: (value) {
                         final length = value?.length ?? 0;
                         return (length < 8 || length > 72) ? 'Password must be 8-72 characters' : null;
                       },
                     ),
+
                     const SizedBox(height: 24),
                     BlocBuilder<AuthBloc, AuthState>(
                       builder: (context, state) {
@@ -96,6 +120,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         );
                       },
                     ),
+
                     const SizedBox(height: 12),
                     TextButton(
                       onPressed: () => context.go(RoutePaths.login),
@@ -110,4 +135,5 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
+
 }

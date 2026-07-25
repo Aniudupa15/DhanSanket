@@ -1,7 +1,7 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/app_trend_badge.dart';
 import '../../domain/entities/holding.dart';
 
 class HoldingTile extends StatelessWidget {
@@ -11,26 +11,58 @@ class HoldingTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pnl = holding.pnl;
-    final isPositive = pnl != null && pnl >= Decimal.zero;
-    final color = pnl == null
-        ? AppColors.neutralChange(context)
-        : (isPositive ? AppColors.positiveChange(context) : AppColors.negativeChange(context));
+    final theme = Theme.of(context);
+    final pnlPercent = holding.pnlPercent != null
+        ? (double.tryParse(holding.pnlPercent.toString()) ?? 0.0)
+        : null;
 
-    return ListTile(
-      title: Text(holding.symbol),
-      subtitle: Text('${holding.quantity} @ avg ${holding.avgPrice}'),
-      trailing: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(holding.currentValue?.toString() ?? '—'),
-          Text(
-            pnl != null ? '${isPositive ? '+' : ''}$pnl (${holding.pnlPercent ?? '—'}%)' : 'N/A',
-            style: TextStyle(color: color, fontSize: 12),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      child: Card(
+        margin: EdgeInsets.zero,
+        child: ListTile(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          leading: CircleAvatar(
+            radius: 20,
+            backgroundColor: theme.colorScheme.secondaryContainer,
+            child: Text(
+              holding.symbol.length > 2 ? holding.symbol.substring(0, 2) : holding.symbol,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: theme.colorScheme.onSecondaryContainer,
+              ),
+            ),
           ),
-        ],
+          title: Text(
+            holding.symbol,
+            style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+          ),
+          subtitle: Text(
+            '${holding.quantity} qty • Avg ₹${holding.avgPrice}',
+            style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+          ),
+          trailing: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                holding.currentValue != null ? '₹${holding.currentValue}' : '—',
+                style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+              ),
+              const SizedBox(height: 2),
+              if (pnlPercent != null)
+                AppTrendBadge(
+                  changePercent: pnlPercent,
+                  valueText: '${holding.pnl != null && holding.pnl! >= Decimal.zero ? '+' : ''}₹${holding.pnl}',
+                )
+              else
+                Text('—', style: theme.textTheme.bodySmall),
+            ],
+          ),
+        ),
       ),
     );
   }
 }
+

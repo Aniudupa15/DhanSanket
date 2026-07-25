@@ -33,6 +33,7 @@ import '../widgets/signal_card.dart';
 
 const List<String> _tabTitles = ['Overview', 'Indicators', 'Signals', 'Fundamentals', 'News', 'Corp. Actions'];
 
+
 class StockDetailPage extends StatefulWidget {
   final String symbol;
 
@@ -97,6 +98,8 @@ class _StockDetailPageState extends State<StockDetailPage> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.symbol),
@@ -117,9 +120,75 @@ class _StockDetailPageState extends State<StockDetailPage> with SingleTickerProv
           _CorporateActionsTab(symbol: widget.symbol),
         ],
       ),
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.only(
+          left: 16,
+          right: 16,
+          top: 12,
+          bottom: 12 + MediaQuery.of(context).padding.bottom,
+        ),
+        decoration: BoxDecoration(
+          color: theme.colorScheme.surface,
+          border: Border(
+            top: BorderSide(color: theme.colorScheme.outlineVariant, width: 1),
+          ),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: OutlinedButton.icon(
+                onPressed: () => _showAddToWatchlistSheet(context, widget.symbol),
+                icon: const Icon(Icons.star_outline_rounded, size: 18),
+                label: const Text('Add Watchlist'),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: FilledButton.icon(
+                onPressed: () {},
+                icon: const Icon(Icons.notifications_active_outlined, size: 18),
+                label: const Text('Set Price Alert'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showAddToWatchlistSheet(BuildContext context, String symbol) {
+    showModalBottomSheet<void>(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Add $symbol to Watchlist', style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(height: 16),
+              ListTile(
+                leading: const Icon(Icons.star_rounded),
+                title: const Text('Default Watchlist'),
+                onTap: () {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Added $symbol to Watchlist')),
+                  );
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
+
+
 
 class _OverviewTab extends StatelessWidget {
   final String symbol;
