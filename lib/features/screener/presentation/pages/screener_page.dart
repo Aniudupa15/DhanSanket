@@ -2,13 +2,16 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/widgets/app_empty_state.dart';
 import '../../../../core/widgets/app_error_view.dart';
 import '../../../../core/widgets/app_loading_view.dart';
+import '../../../../core/widgets/app_skeleton_loader.dart';
 import '../../domain/entities/screener_filter.dart';
 import '../bloc/screener_bloc.dart';
 import '../bloc/screener_event.dart';
 import '../bloc/screener_state.dart';
 import '../widgets/screener_result_tile.dart';
+
 
 class ScreenerPage extends StatefulWidget {
   const ScreenerPage({super.key});
@@ -121,20 +124,35 @@ class _ScreenerPageState extends State<ScreenerPage> {
             child: BlocBuilder<ScreenerBloc, ScreenerState>(
               builder: (context, state) {
                 return switch (state) {
-                  ScreenerInitial() => const Center(child: Text('Set filters above and run the screener.')),
-                  ScreenerLoading() => const AppLoadingView(),
+                  ScreenerInitial() => AppEmptyState(
+                      icon: Icons.filter_alt_outlined,
+                      title: 'Run Stock Screener',
+                      message: 'Set parameters above and tap "Run Screener" to filter stocks by RSI, price range, volume, and moving averages.',
+                      actionLabel: 'Run Screener',
+                      onAction: _submit,
+                    ),
+                  ScreenerLoading() => ListView.separated(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      itemCount: 5,
+                      separatorBuilder: (_, __) => const Divider(height: 1, indent: 68),
+                      itemBuilder: (_, __) => const StockTileSkeleton(),
+                    ),
                   ScreenerError(:final failure) => AppErrorView(message: failure.message, onRetry: _submit),
-                  ScreenerLoaded(:final results) =>
-                    results.isEmpty
-                        ? const Center(child: Text('No stocks match these filters.'))
-                        : ListView.builder(
-                            itemCount: results.length,
-                            itemBuilder: (context, index) => ScreenerResultTile(result: results[index]),
-                          ),
+                  ScreenerLoaded(:final results) => results.isEmpty
+                      ? const AppEmptyState(
+                          icon: Icons.filter_list_off_rounded,
+                          title: 'No matching stocks',
+                          message: 'No stocks match your filter criteria. Try expanding the price or RSI parameters.',
+                        )
+                      : ListView.builder(
+                          itemCount: results.length,
+                          itemBuilder: (context, index) => ScreenerResultTile(result: results[index]),
+                        ),
                 };
               },
             ),
           ),
+
         ],
       ),
     );

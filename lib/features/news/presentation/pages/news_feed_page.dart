@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/entities/news_article.dart';
+import '../../../../core/widgets/app_empty_state.dart';
 import '../../../../core/widgets/app_error_view.dart';
 import '../../../../core/widgets/app_loading_view.dart';
+import '../../../../core/widgets/app_skeleton_loader.dart';
 import '../bloc/news_bloc.dart';
 import '../bloc/news_event.dart';
 import '../bloc/news_state.dart';
 import '../widgets/news_article_tile.dart';
+
 
 class NewsFeedPage extends StatefulWidget {
   const NewsFeedPage({super.key});
@@ -60,25 +63,34 @@ class _NewsFeedPageState extends State<NewsFeedPage> {
             child: BlocBuilder<NewsBloc, NewsState>(
               builder: (context, state) {
                 return switch (state) {
-                  NewsInitial() || NewsLoading() => const AppLoadingView(),
+                  NewsInitial() || NewsLoading() => ListView.separated(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      itemCount: 5,
+                      separatorBuilder: (_, __) => const Divider(height: 1, indent: 68),
+                      itemBuilder: (_, __) => const StockTileSkeleton(),
+                    ),
                   NewsError(:final failure) => AppErrorView(
                     message: failure.message,
                     onRetry: () => context.read<NewsBloc>().add(NewsRequested(category: _category)),
                   ),
-                  NewsLoaded(:final articles) =>
-                    articles.isEmpty
-                        ? const Center(child: Text('No news right now.'))
-                        : RefreshIndicator(
-                            onRefresh: () async => context.read<NewsBloc>().add(NewsRequested(category: _category)),
-                            child: ListView.builder(
-                              itemCount: articles.length,
-                              itemBuilder: (context, index) => NewsArticleTile(article: articles[index]),
-                            ),
+                  NewsLoaded(:final articles) => articles.isEmpty
+                      ? const AppEmptyState(
+                          icon: Icons.newspaper_outlined,
+                          title: 'No news articles',
+                          message: 'No news stories found for this category right now.',
+                        )
+                      : RefreshIndicator(
+                          onRefresh: () async => context.read<NewsBloc>().add(NewsRequested(category: _category)),
+                          child: ListView.builder(
+                            itemCount: articles.length,
+                            itemBuilder: (context, index) => NewsArticleTile(article: articles[index]),
                           ),
+                        ),
                 };
               },
             ),
           ),
+
         ],
       ),
     );

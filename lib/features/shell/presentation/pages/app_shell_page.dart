@@ -31,6 +31,36 @@ class AppShellPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final location = GoRouterState.of(context).matchedLocation;
     final currentIndex = _indexForLocation(location);
+    final isWideScreen = MediaQuery.of(context).size.width >= 600;
+
+    if (isWideScreen) {
+      return Scaffold(
+        body: Row(
+          children: [
+            NavigationRail(
+              selectedIndex: currentIndex,
+              onDestinationSelected: (index) => context.go(_tabs[index].path),
+              labelType: NavigationRailLabelType.all,
+              leading: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 16),
+                child: Icon(Icons.currency_rupee, size: 32),
+              ),
+              destinations: _tabs
+                  .map(
+                    (tab) => NavigationRailDestination(
+                      icon: Icon(tab.icon),
+                      selectedIcon: Icon(tab.selectedIcon),
+                      label: Text(tab.label),
+                    ),
+                  )
+                  .toList(),
+            ),
+            const VerticalDivider(thickness: 1, width: 1),
+            Expanded(child: child),
+          ],
+        ),
+      );
+    }
 
     return Scaffold(
       body: child,
@@ -39,11 +69,15 @@ class AppShellPage extends StatelessWidget {
         onDestinationSelected: (index) => context.go(_tabs[index].path),
         destinations: _tabs
             .map(
-              (tab) =>
-                  NavigationDestination(icon: Icon(tab.icon), selectedIcon: Icon(tab.selectedIcon), label: tab.label),
+              (tab) => NavigationDestination(
+                icon: Icon(tab.icon),
+                selectedIcon: Icon(tab.selectedIcon),
+                label: tab.label,
+              ),
             )
             .toList(),
       ),
     );
   }
 }
+
