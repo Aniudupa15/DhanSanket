@@ -8,13 +8,7 @@ class ResponsiveLayout extends StatelessWidget {
   final Widget? desktop;
   final double maxContentWidth;
 
-  const ResponsiveLayout({
-    super.key,
-    required this.mobile,
-    this.tablet,
-    this.desktop,
-    this.maxContentWidth = 1200.0,
-  });
+  const ResponsiveLayout({super.key, required this.mobile, this.tablet, this.desktop, this.maxContentWidth = 1200.0});
 
   static bool isMobile(BuildContext context) => MediaQuery.of(context).size.width < 600;
   static bool isTablet(BuildContext context) =>

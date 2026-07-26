@@ -22,19 +22,14 @@ class MarketStatusBanner extends StatelessWidget {
         itemBuilder: (context, index) {
           final status = statuses[index];
           final isOpen = status.status.toLowerCase() == 'open';
-          final color = isOpen
-              ? AppColors.positiveChange(context)
-              : AppColors.neutralChange(context);
+          final color = isOpen ? AppColors.positiveChange(context) : AppColors.neutralChange(context);
 
           return Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surfaceContainerLow,
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: Theme.of(context).colorScheme.outlineVariant,
-                width: 1,
-              ),
+              border: Border.all(color: Theme.of(context).colorScheme.outlineVariant, width: 1),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -58,4 +53,3 @@ class MarketStatusBanner extends StatelessWidget {
     );
   }
 }
-

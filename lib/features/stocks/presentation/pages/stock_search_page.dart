@@ -70,10 +70,7 @@ class _StockSearchPageState extends State<StockSearchPage> {
               hintText: 'Search stock symbol or company name...',
               prefixIcon: const Icon(Icons.search, size: 20),
               suffixIcon: _controller.text.isNotEmpty
-                  ? IconButton(
-                      icon: const Icon(Icons.clear, size: 18),
-                      onPressed: _clearSearch,
-                    )
+                  ? IconButton(icon: const Icon(Icons.clear, size: 18), onPressed: _clearSearch)
                   : null,
               contentPadding: const EdgeInsets.symmetric(vertical: 10),
             ),
@@ -86,59 +83,60 @@ class _StockSearchPageState extends State<StockSearchPage> {
           return switch (state) {
             StockSearchInitial() => RecentSearchesSection(onSelect: _onRecentSearchSelected),
             StockSearchLoading() => ListView.separated(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                itemCount: 6,
-                separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
-                itemBuilder: (_, _) => const StockTileSkeleton(),
-              ),
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              itemCount: 6,
+              separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
+              itemBuilder: (_, _) => const StockTileSkeleton(),
+            ),
             StockSearchError(:final failure) => AppErrorView(
-                message: failure.message,
-                onRetry: () => context.read<StockSearchBloc>().add(StockSearchQueryChanged(_controller.text)),
-              ),
-            StockSearchLoaded(:final results) => results.isEmpty
-                ? AppEmptyState(
-                    icon: Icons.search_off_rounded,
-                    title: 'No stocks found',
-                    message: 'No matching stocks found for "${_controller.text}". Try searching with another keyword.',
-                  )
-                : ListView.separated(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    itemCount: results.length,
-                    separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
-                    itemBuilder: (context, index) {
-                      final result = results[index];
-                      return ListTile(
-                        leading: CircleAvatar(
-                          radius: 20,
-                          backgroundColor: theme.colorScheme.primaryContainer,
-                          child: Text(
-                            result.symbol.length > 2 ? result.symbol.substring(0, 2) : result.symbol,
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: theme.colorScheme.onPrimaryContainer,
+              message: failure.message,
+              onRetry: () => context.read<StockSearchBloc>().add(StockSearchQueryChanged(_controller.text)),
+            ),
+            StockSearchLoaded(:final results) =>
+              results.isEmpty
+                  ? AppEmptyState(
+                      icon: Icons.search_off_rounded,
+                      title: 'No stocks found',
+                      message:
+                          'No matching stocks found for "${_controller.text}". Try searching with another keyword.',
+                    )
+                  : ListView.separated(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      itemCount: results.length,
+                      separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
+                      itemBuilder: (context, index) {
+                        final result = results[index];
+                        return ListTile(
+                          leading: CircleAvatar(
+                            radius: 20,
+                            backgroundColor: theme.colorScheme.primaryContainer,
+                            child: Text(
+                              result.symbol.length > 2 ? result.symbol.substring(0, 2) : result.symbol,
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: theme.colorScheme.onPrimaryContainer,
+                              ),
                             ),
                           ),
-                        ),
-                        title: Text(
-                          result.symbol,
-                          style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
-                        ),
-                        subtitle: Text(
-                          result.name,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
-                        ),
-                        trailing: const Icon(Icons.chevron_right, size: 20),
-                        onTap: () => context.push(RoutePaths.stockDetail(result.symbol)),
-                      );
-                    },
-                  ),
+                          title: Text(
+                            result.symbol,
+                            style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+                          ),
+                          subtitle: Text(
+                            result.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                          ),
+                          trailing: const Icon(Icons.chevron_right, size: 20),
+                          onTap: () => context.push(RoutePaths.stockDetail(result.symbol)),
+                        );
+                      },
+                    ),
           };
         },
       ),
     );
   }
 }
-

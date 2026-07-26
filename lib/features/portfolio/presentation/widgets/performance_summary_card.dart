@@ -29,9 +29,7 @@ class PerformanceSummaryCard extends StatelessWidget {
           ],
         ),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: theme.colorScheme.primary.withValues(alpha: 0.2),
-        ),
+        border: Border.all(color: theme.colorScheme.primary.withValues(alpha: 0.2)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,11 +54,7 @@ class PerformanceSummaryCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _metricBox(
-                  context,
-                  label: 'Invested',
-                  value: '₹${performance.totalInvested}',
-                ),
+                child: _metricBox(context, label: 'Invested', value: '₹${performance.totalInvested}'),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -79,15 +73,11 @@ class PerformanceSummaryCard extends StatelessWidget {
             children: [
               Text(
                 'XIRR Return',
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
+                style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
               ),
               Text(
                 performance.xirrPercent != null ? '${performance.xirrPercent}%' : 'N/A',
-                style: theme.textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -107,12 +97,7 @@ class PerformanceSummaryCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            label,
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
-          ),
+          Text(label, style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
           const SizedBox(height: 4),
           Text(
             value,
@@ -126,4 +111,3 @@ class PerformanceSummaryCard extends StatelessWidget {
     );
   }
 }
-

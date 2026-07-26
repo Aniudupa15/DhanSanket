@@ -39,9 +39,7 @@ class PriceChart extends StatelessWidget {
                 labelStyle: TextStyle(
                   fontSize: 12,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                  color: isSelected
-                      ? Theme.of(context).colorScheme.onPrimary
-                      : Theme.of(context).colorScheme.onSurface,
+                  color: isSelected ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.onSurface,
                 ),
                 selectedColor: Theme.of(context).colorScheme.primary,
                 backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
@@ -105,10 +103,7 @@ class PriceChart extends StatelessWidget {
                         gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
-                          colors: [
-                            lineColor.withValues(alpha: 0.3),
-                            lineColor.withValues(alpha: 0.0),
-                          ],
+                          colors: [lineColor.withValues(alpha: 0.3), lineColor.withValues(alpha: 0.0)],
                         ),
                       ),
                     ),
@@ -121,4 +116,3 @@ class PriceChart extends StatelessWidget {
     );
   }
 }
-

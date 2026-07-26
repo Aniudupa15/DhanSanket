@@ -24,49 +24,34 @@ class AppTrendBadge extends StatelessWidget {
     final textColor = isPositive
         ? AppColors.positiveChange(context)
         : isNegative
-            ? AppColors.negativeChange(context)
-            : AppColors.neutralChange(context);
+        ? AppColors.negativeChange(context)
+        : AppColors.neutralChange(context);
 
     final backgroundColor = isPositive
         ? AppColors.positiveBackground(context)
         : isNegative
-            ? AppColors.negativeBackground(context)
-            : AppColors.neutralBackground(context);
+        ? AppColors.negativeBackground(context)
+        : AppColors.neutralBackground(context);
 
-    final displayString = valueText ??
-        '${isPositive ? '+' : ''}${changePercent.toStringAsFixed(2)}%';
+    final displayString = valueText ?? '${isPositive ? '+' : ''}${changePercent.toStringAsFixed(2)}%';
 
     final icon = isPositive
         ? Icons.arrow_drop_up
         : isNegative
-            ? Icons.arrow_drop_down
-            : Icons.remove;
+        ? Icons.arrow_drop_down
+        : Icons.remove;
 
     return Container(
       padding: padding,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(6),
-      ),
+      decoration: BoxDecoration(color: backgroundColor, borderRadius: BorderRadius.circular(6)),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          if (showIcon) ...[
-            Icon(
-              icon,
-              size: 16,
-              color: textColor,
-            ),
-            const SizedBox(width: 2),
-          ],
+          if (showIcon) ...[Icon(icon, size: 16, color: textColor), const SizedBox(width: 2)],
           Text(
             displayString,
-            style: TextStyle(
-              color: textColor,
-              fontWeight: FontWeight.w600,
-              fontSize: 12,
-            ),
+            style: TextStyle(color: textColor, fontWeight: FontWeight.w600, fontSize: 12),
           ),
         ],
       ),

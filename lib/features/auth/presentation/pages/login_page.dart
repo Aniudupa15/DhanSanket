@@ -59,11 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                     CircleAvatar(
                       radius: 36,
                       backgroundColor: theme.colorScheme.primaryContainer,
-                      child: Icon(
-                        Icons.trending_up_rounded,
-                        size: 40,
-                        color: theme.colorScheme.primary,
-                      ),
+                      child: Icon(Icons.trending_up_rounded, size: 40, color: theme.colorScheme.primary),
                     ),
                     const SizedBox(height: 16),
                     Text(
@@ -77,9 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 6),
                     Text(
                       'Indian Stock Market Analytics & Portfolio Tracker',
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
+                      style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 36),
@@ -124,4 +118,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-

@@ -39,11 +39,7 @@ class _AlertsPageState extends State<AlertsPage> {
       appBar: AppBar(
         title: const Text('Price Alerts'),
         actions: [
-          IconButton.filledTonal(
-            icon: const Icon(Icons.add, size: 20),
-            tooltip: 'New alert',
-            onPressed: _create,
-          ),
+          IconButton.filledTonal(icon: const Icon(Icons.add, size: 20), tooltip: 'New alert', onPressed: _create),
           const SizedBox(width: 8),
         ],
       ),
@@ -51,41 +47,40 @@ class _AlertsPageState extends State<AlertsPage> {
         builder: (context, state) {
           return switch (state) {
             AlertInitial() || AlertLoading() => ListView.separated(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                itemCount: 4,
-                separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
-                itemBuilder: (_, _) => const StockTileSkeleton(),
-              ),
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              itemCount: 4,
+              separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
+              itemBuilder: (_, _) => const StockTileSkeleton(),
+            ),
             AlertError(:final failure) => AppErrorView(
-                message: failure.message,
-                onRetry: () => context.read<AlertBloc>().add(const AlertsRequested()),
-              ),
-            AlertLoaded(:final alerts) => alerts.isEmpty
-                ? AppEmptyState(
-                    icon: Icons.notifications_active_outlined,
-                    title: 'No alerts yet.',
-                    message: 'Get push notifications when your target stock prices or technical conditions are triggered.',
-                    actionLabel: 'Create one',
-                    onAction: _create,
-                  )
-
-
-                : ListView.separated(
-                    padding: const EdgeInsets.all(12),
-                    itemCount: alerts.length,
-                    separatorBuilder: (_, _) => const SizedBox(height: 8),
-                    itemBuilder: (context, index) {
-                      final alert = alerts[index];
-                      return AlertTile(
-                        alert: alert,
-                        onDelete: () => context.read<AlertBloc>().add(AlertDeleteRequested(alert.id)),
-                      );
-                    },
-                  ),
+              message: failure.message,
+              onRetry: () => context.read<AlertBloc>().add(const AlertsRequested()),
+            ),
+            AlertLoaded(:final alerts) =>
+              alerts.isEmpty
+                  ? AppEmptyState(
+                      icon: Icons.notifications_active_outlined,
+                      title: 'No alerts yet.',
+                      message:
+                          'Get push notifications when your target stock prices or technical conditions are triggered.',
+                      actionLabel: 'Create one',
+                      onAction: _create,
+                    )
+                  : ListView.separated(
+                      padding: const EdgeInsets.all(12),
+                      itemCount: alerts.length,
+                      separatorBuilder: (_, _) => const SizedBox(height: 8),
+                      itemBuilder: (context, index) {
+                        final alert = alerts[index];
+                        return AlertTile(
+                          alert: alert,
+                          onDelete: () => context.read<AlertBloc>().add(AlertDeleteRequested(alert.id)),
+                        );
+                      },
+                    ),
           };
         },
       ),
     );
   }
 }
-

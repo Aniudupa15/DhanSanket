@@ -15,7 +15,6 @@ class HeatmapTileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final isPositive = tile.changePercent != null && tile.changePercent! >= Decimal.zero;
 
-
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -26,11 +25,7 @@ class HeatmapTileWidget extends StatelessWidget {
             color: _colorFor(tile.bucket),
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.1),
-                blurRadius: 4,
-                offset: const Offset(0, 2),
-              ),
+              BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 4, offset: const Offset(0, 2)),
             ],
           ),
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
@@ -51,14 +46,8 @@ class HeatmapTileWidget extends StatelessWidget {
               ),
               const SizedBox(height: 2),
               Text(
-                tile.changePercent != null
-                    ? '${isPositive ? '+' : ''}${tile.changePercent}%'
-                    : '—',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 11,
-                ),
+                tile.changePercent != null ? '${isPositive ? '+' : ''}${tile.changePercent}%' : '—',
+                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 11),
               ),
             ],
           ),
@@ -70,12 +59,11 @@ class HeatmapTileWidget extends StatelessWidget {
   Color _colorFor(HeatmapBucket bucket) {
     return switch (bucket) {
       HeatmapBucket.strongGain => const Color(0xFF15803D), // Emerald 700
-      HeatmapBucket.gain => const Color(0xFF16A34A),       // Emerald 600
-      HeatmapBucket.flat => const Color(0xFF64748B),       // Slate 500
-      HeatmapBucket.loss => const Color(0xFFDC2626),       // Red 600
+      HeatmapBucket.gain => const Color(0xFF16A34A), // Emerald 600
+      HeatmapBucket.flat => const Color(0xFF64748B), // Slate 500
+      HeatmapBucket.loss => const Color(0xFFDC2626), // Red 600
       HeatmapBucket.strongLoss => const Color(0xFF991B1B), // Red 800
-      HeatmapBucket.unknown => const Color(0xFF475569),    // Slate 600
+      HeatmapBucket.unknown => const Color(0xFF475569), // Slate 600
     };
   }
 }
-

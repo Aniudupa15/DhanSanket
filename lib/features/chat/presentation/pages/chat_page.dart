@@ -147,7 +147,11 @@ class _ChatPageState extends State<ChatPage> {
                       const SizedBox(width: 8),
                       IconButton.filled(
                         icon: state.isSending
-                            ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                            ? const SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                              )
                             : const Icon(Icons.send_rounded, size: 20),
                         tooltip: 'Send message',
                         onPressed: state.isSending ? null : _send,
@@ -163,4 +167,3 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 }
-

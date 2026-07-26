@@ -13,9 +13,7 @@ class MarketMoverTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final changePercent = mover.changePercent != null
-        ? (double.tryParse(mover.changePercent.toString()) ?? 0.0)
-        : null;
+    final changePercent = mover.changePercent != null ? (double.tryParse(mover.changePercent.toString()) ?? 0.0) : null;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -29,17 +27,10 @@ class MarketMoverTile extends StatelessWidget {
             backgroundColor: theme.colorScheme.primaryContainer,
             child: Text(
               mover.symbol.length > 2 ? mover.symbol.substring(0, 2) : mover.symbol,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: theme.colorScheme.onPrimaryContainer,
-              ),
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: theme.colorScheme.onPrimaryContainer),
             ),
           ),
-          title: Text(
-            mover.symbol,
-            style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
-          ),
+          title: Text(mover.symbol, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
           subtitle: Text(
             mover.name,
             maxLines: 1,
@@ -50,10 +41,7 @@ class MarketMoverTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                '₹${mover.lastPrice}',
-                style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
-              ),
+              Text('₹${mover.lastPrice}', style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
               const SizedBox(height: 2),
               if (changePercent != null)
                 AppTrendBadge(changePercent: changePercent)
@@ -66,4 +54,3 @@ class MarketMoverTile extends StatelessWidget {
     );
   }
 }
-
