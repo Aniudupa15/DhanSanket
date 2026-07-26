@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/widgets/app_empty_state.dart';
 import '../../../../core/widgets/app_error_view.dart';
-import '../../../../core/widgets/app_loading_view.dart';
 import '../../../../core/widgets/app_skeleton_loader.dart';
 import '../../domain/entities/screener_filter.dart';
 import '../bloc/screener_bloc.dart';
@@ -134,8 +133,8 @@ class _ScreenerPageState extends State<ScreenerPage> {
                   ScreenerLoading() => ListView.separated(
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       itemCount: 5,
-                      separatorBuilder: (_, __) => const Divider(height: 1, indent: 68),
-                      itemBuilder: (_, __) => const StockTileSkeleton(),
+                      separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
+                      itemBuilder: (_, _) => const StockTileSkeleton(),
                     ),
                   ScreenerError(:final failure) => AppErrorView(message: failure.message, onRetry: _submit),
                   ScreenerLoaded(:final results) => results.isEmpty

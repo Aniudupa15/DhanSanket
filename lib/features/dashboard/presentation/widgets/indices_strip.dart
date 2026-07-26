@@ -1,4 +1,3 @@
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/widgets/app_trend_badge.dart';

@@ -103,7 +103,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       if (user?.createdAt != null) ...[
                         const SizedBox(height: 8),
                         Text(
-                          'Member since ${DateFormat.yMMMd().format(user!.createdAt!.toLocal())}',
+                          'Member since ${DateFormat.yMMMd().format(user!.createdAt.toLocal())}',
                           style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                         ),
                       ],

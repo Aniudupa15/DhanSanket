@@ -88,8 +88,8 @@ class _StockSearchPageState extends State<StockSearchPage> {
             StockSearchLoading() => ListView.separated(
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 itemCount: 6,
-                separatorBuilder: (_, __) => const Divider(height: 1, indent: 68),
-                itemBuilder: (_, __) => const StockTileSkeleton(),
+                separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
+                itemBuilder: (_, _) => const StockTileSkeleton(),
               ),
             StockSearchError(:final failure) => AppErrorView(
                 message: failure.message,
@@ -104,7 +104,7 @@ class _StockSearchPageState extends State<StockSearchPage> {
                 : ListView.separated(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     itemCount: results.length,
-                    separatorBuilder: (_, __) => const Divider(height: 1, indent: 68),
+                    separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
                     itemBuilder: (context, index) {
                       final result = results[index];
                       return ListTile(
