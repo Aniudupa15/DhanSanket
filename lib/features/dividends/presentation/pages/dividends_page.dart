@@ -72,8 +72,8 @@ class _DividendsPageState extends State<DividendsPage> {
                   DividendInitial() || DividendLoading() => ListView.separated(
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       itemCount: 4,
-                      separatorBuilder: (_, __) => const Divider(height: 1, indent: 68),
-                      itemBuilder: (_, __) => const StockTileSkeleton(),
+                      separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
+                      itemBuilder: (_, _) => const StockTileSkeleton(),
                     ),
                   DividendError(:final failure) => AppErrorView(message: failure.message, onRetry: _apply),
                   DividendLoaded(:final recommendations) => recommendations.isEmpty

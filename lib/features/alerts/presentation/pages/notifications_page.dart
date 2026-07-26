@@ -33,8 +33,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
             NotificationInitial() || NotificationLoading() => ListView.separated(
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 itemCount: 5,
-                separatorBuilder: (_, __) => const Divider(height: 1, indent: 68),
-                itemBuilder: (_, __) => const StockTileSkeleton(),
+                separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
+                itemBuilder: (_, _) => const StockTileSkeleton(),
               ),
             NotificationError(:final failure) => AppErrorView(
                 message: failure.message,
@@ -51,7 +51,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                     child: ListView.separated(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       itemCount: notifications.length,
-                      separatorBuilder: (_, __) => const Divider(height: 1, indent: 68),
+                      separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
                       itemBuilder: (context, index) {
                         final notification = notifications[index];
                         return NotificationTile(

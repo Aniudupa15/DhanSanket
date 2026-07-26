@@ -53,8 +53,8 @@ class _AlertsPageState extends State<AlertsPage> {
             AlertInitial() || AlertLoading() => ListView.separated(
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 itemCount: 4,
-                separatorBuilder: (_, __) => const Divider(height: 1, indent: 68),
-                itemBuilder: (_, __) => const StockTileSkeleton(),
+                separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
+                itemBuilder: (_, _) => const StockTileSkeleton(),
               ),
             AlertError(:final failure) => AppErrorView(
                 message: failure.message,
@@ -73,7 +73,7 @@ class _AlertsPageState extends State<AlertsPage> {
                 : ListView.separated(
                     padding: const EdgeInsets.all(12),
                     itemCount: alerts.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 8),
+                    separatorBuilder: (_, _) => const SizedBox(height: 8),
                     itemBuilder: (context, index) {
                       final alert = alerts[index];
                       return AlertTile(

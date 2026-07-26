@@ -54,8 +54,8 @@ class _PortfolioListPageState extends State<PortfolioListPage> {
             PortfolioInitial() || PortfolioLoading() => ListView.separated(
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 itemCount: 4,
-                separatorBuilder: (_, __) => const Divider(height: 1, indent: 68),
-                itemBuilder: (_, __) => const StockTileSkeleton(),
+                separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
+                itemBuilder: (_, _) => const StockTileSkeleton(),
               ),
             PortfolioError(:final failure) => AppErrorView(
                 message: failure.message,
@@ -74,7 +74,7 @@ class _PortfolioListPageState extends State<PortfolioListPage> {
                 : ListView.separated(
                     padding: const EdgeInsets.all(12),
                     itemCount: portfolios.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 8),
+                    separatorBuilder: (_, _) => const SizedBox(height: 8),
                     itemBuilder: (context, index) {
                       final portfolio = portfolios[index];
                       return Card(
