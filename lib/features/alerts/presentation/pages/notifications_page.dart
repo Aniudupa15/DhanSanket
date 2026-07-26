@@ -31,41 +31,41 @@ class _NotificationsPageState extends State<NotificationsPage> {
         builder: (context, state) {
           return switch (state) {
             NotificationInitial() || NotificationLoading() => ListView.separated(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                itemCount: 5,
-                separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
-                itemBuilder: (_, _) => const StockTileSkeleton(),
-              ),
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              itemCount: 5,
+              separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
+              itemBuilder: (_, _) => const StockTileSkeleton(),
+            ),
             NotificationError(:final failure) => AppErrorView(
-                message: failure.message,
-                onRetry: () => context.read<NotificationBloc>().add(const NotificationsRequested()),
-              ),
-            NotificationLoaded(:final notifications) => notifications.isEmpty
-                ? const AppEmptyState(
-                    icon: Icons.notifications_off_outlined,
-                    title: 'No notifications',
-                    message: 'You have no price alert notifications or system updates right now.',
-                  )
-                : RefreshIndicator(
-                    onRefresh: () async => context.read<NotificationBloc>().add(const NotificationsRequested()),
-                    child: ListView.separated(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      itemCount: notifications.length,
-                      separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
-                      itemBuilder: (context, index) {
-                        final notification = notifications[index];
-                        return NotificationTile(
-                          notification: notification,
-                          onTap: () =>
-                              context.read<NotificationBloc>().add(NotificationMarkReadRequested(notification.id)),
-                        );
-                      },
+              message: failure.message,
+              onRetry: () => context.read<NotificationBloc>().add(const NotificationsRequested()),
+            ),
+            NotificationLoaded(:final notifications) =>
+              notifications.isEmpty
+                  ? const AppEmptyState(
+                      icon: Icons.notifications_off_outlined,
+                      title: 'No notifications',
+                      message: 'You have no price alert notifications or system updates right now.',
+                    )
+                  : RefreshIndicator(
+                      onRefresh: () async => context.read<NotificationBloc>().add(const NotificationsRequested()),
+                      child: ListView.separated(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        itemCount: notifications.length,
+                        separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
+                        itemBuilder: (context, index) {
+                          final notification = notifications[index];
+                          return NotificationTile(
+                            notification: notification,
+                            onTap: () =>
+                                context.read<NotificationBloc>().add(NotificationMarkReadRequested(notification.id)),
+                          );
+                        },
+                      ),
                     ),
-                  ),
           };
         },
       ),
     );
   }
 }
-

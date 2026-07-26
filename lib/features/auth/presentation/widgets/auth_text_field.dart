@@ -42,10 +42,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
         prefixIcon: widget.prefixIcon != null ? Icon(widget.prefixIcon, size: 20) : null,
         suffixIcon: widget.obscureText
             ? IconButton(
-                icon: Icon(
-                  _obscured ? Icons.visibility_off_outlined : Icons.visibility_outlined,
-                  size: 20,
-                ),
+                icon: Icon(_obscured ? Icons.visibility_off_outlined : Icons.visibility_outlined, size: 20),
                 onPressed: () => setState(() => _obscured = !_obscured),
               )
             : null,
@@ -54,4 +51,3 @@ class _AuthTextFieldState extends State<AuthTextField> {
     );
   }
 }
-

@@ -35,10 +35,7 @@ class _SplashPageState extends State<SplashPage> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: LinearGradient(
-                  colors: [
-                    theme.colorScheme.primary,
-                    theme.colorScheme.tertiary,
-                  ],
+                  colors: [theme.colorScheme.primary, theme.colorScheme.tertiary],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -55,10 +52,7 @@ class _SplashPageState extends State<SplashPage> {
             const SizedBox(height: 24),
             Text(
               'DhanSanket',
-              style: theme.textTheme.headlineLarge?.copyWith(
-                fontWeight: FontWeight.w800,
-                letterSpacing: -0.5,
-              ),
+              style: theme.textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.w800, letterSpacing: -0.5),
             ),
             const SizedBox(height: 6),
             Text(
@@ -73,10 +67,7 @@ class _SplashPageState extends State<SplashPage> {
             SizedBox(
               width: 24,
               height: 24,
-              child: CircularProgressIndicator(
-                strokeWidth: 2.5,
-                color: theme.colorScheme.primary,
-              ),
+              child: CircularProgressIndicator(strokeWidth: 2.5, color: theme.colorScheme.primary),
             ),
           ],
         ),
@@ -84,4 +75,3 @@ class _SplashPageState extends State<SplashPage> {
     );
   }
 }
-

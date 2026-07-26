@@ -45,19 +45,14 @@ class NewsArticleTile extends StatelessWidget {
                     ),
                     Text(
                       DateFormat.yMMMd().format(article.publishedAt.toLocal()),
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
+                      style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                     ),
                   ],
                 ),
                 const SizedBox(height: 10),
                 Text(
                   article.headline,
-                  style: theme.textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    height: 1.3,
-                  ),
+                  style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700, height: 1.3),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -67,10 +62,7 @@ class NewsArticleTile extends StatelessWidget {
                     article.summary!,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
-                      height: 1.4,
-                    ),
+                    style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant, height: 1.4),
                   ),
                 ],
                 const SizedBox(height: 10),
@@ -97,4 +89,3 @@ class NewsArticleTile extends StatelessWidget {
     );
   }
 }
-

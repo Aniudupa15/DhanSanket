@@ -12,9 +12,7 @@ class HoldingTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final pnlPercent = holding.pnlPercent != null
-        ? (double.tryParse(holding.pnlPercent.toString()) ?? 0.0)
-        : null;
+    final pnlPercent = holding.pnlPercent != null ? (double.tryParse(holding.pnlPercent.toString()) ?? 0.0) : null;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -34,10 +32,7 @@ class HoldingTile extends StatelessWidget {
               ),
             ),
           ),
-          title: Text(
-            holding.symbol,
-            style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
-          ),
+          title: Text(holding.symbol, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
           subtitle: Text(
             '${holding.quantity} qty • Avg ₹${holding.avgPrice}',
             style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
@@ -65,4 +60,3 @@ class HoldingTile extends StatelessWidget {
     );
   }
 }
-

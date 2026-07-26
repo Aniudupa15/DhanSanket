@@ -11,7 +11,6 @@ import '../bloc/screener_event.dart';
 import '../bloc/screener_state.dart';
 import '../widgets/screener_result_tile.dart';
 
-
 class ScreenerPage extends StatefulWidget {
   const ScreenerPage({super.key});
 
@@ -124,34 +123,35 @@ class _ScreenerPageState extends State<ScreenerPage> {
               builder: (context, state) {
                 return switch (state) {
                   ScreenerInitial() => AppEmptyState(
-                      icon: Icons.filter_alt_outlined,
-                      title: 'Run Stock Screener',
-                      message: 'Set parameters above and tap "Run Screener" to filter stocks by RSI, price range, volume, and moving averages.',
-                      actionLabel: 'Run Screener',
-                      onAction: _submit,
-                    ),
+                    icon: Icons.filter_alt_outlined,
+                    title: 'Run Stock Screener',
+                    message:
+                        'Set parameters above and tap "Run Screener" to filter stocks by RSI, price range, volume, and moving averages.',
+                    actionLabel: 'Run Screener',
+                    onAction: _submit,
+                  ),
                   ScreenerLoading() => ListView.separated(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      itemCount: 5,
-                      separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
-                      itemBuilder: (_, _) => const StockTileSkeleton(),
-                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    itemCount: 5,
+                    separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
+                    itemBuilder: (_, _) => const StockTileSkeleton(),
+                  ),
                   ScreenerError(:final failure) => AppErrorView(message: failure.message, onRetry: _submit),
-                  ScreenerLoaded(:final results) => results.isEmpty
-                      ? const AppEmptyState(
-                          icon: Icons.filter_list_off_rounded,
-                          title: 'No matching stocks',
-                          message: 'No stocks match your filter criteria. Try expanding the price or RSI parameters.',
-                        )
-                      : ListView.builder(
-                          itemCount: results.length,
-                          itemBuilder: (context, index) => ScreenerResultTile(result: results[index]),
-                        ),
+                  ScreenerLoaded(:final results) =>
+                    results.isEmpty
+                        ? const AppEmptyState(
+                            icon: Icons.filter_list_off_rounded,
+                            title: 'No matching stocks',
+                            message: 'No stocks match your filter criteria. Try expanding the price or RSI parameters.',
+                          )
+                        : ListView.builder(
+                            itemCount: results.length,
+                            itemBuilder: (context, index) => ScreenerResultTile(result: results[index]),
+                          ),
                 };
               },
             ),
           ),
-
         ],
       ),
     );

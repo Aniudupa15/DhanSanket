@@ -69,15 +69,11 @@ class AppShellPage extends StatelessWidget {
         onDestinationSelected: (index) => context.go(_tabs[index].path),
         destinations: _tabs
             .map(
-              (tab) => NavigationDestination(
-                icon: Icon(tab.icon),
-                selectedIcon: Icon(tab.selectedIcon),
-                label: tab.label,
-              ),
+              (tab) =>
+                  NavigationDestination(icon: Icon(tab.icon), selectedIcon: Icon(tab.selectedIcon), label: tab.label),
             )
             .toList(),
       ),
     );
   }
 }
-

@@ -9,7 +9,6 @@ import '../bloc/market_movers_event.dart';
 import '../bloc/market_movers_state.dart';
 import '../widgets/market_mover_tile.dart';
 
-
 class MarketMoversPage extends StatefulWidget {
   final MoverCategory initialCategory;
 
@@ -63,11 +62,11 @@ class _MarketMoversPageState extends State<MarketMoversPage> {
               builder: (context, state) {
                 return switch (state) {
                   MarketMoversInitial() || MarketMoversLoading() => ListView.separated(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      itemCount: 6,
-                      separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
-                      itemBuilder: (_, _) => const StockTileSkeleton(),
-                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    itemCount: 6,
+                    separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
+                    itemBuilder: (_, _) => const StockTileSkeleton(),
+                  ),
                   MarketMoversError(:final failure) => AppErrorView(
                     message: failure.message,
                     onRetry: () => context.read<MarketMoversBloc>().add(MarketMoversRequested(_category)),
@@ -80,7 +79,6 @@ class _MarketMoversPageState extends State<MarketMoversPage> {
                             itemBuilder: (context, index) => MarketMoverTile(mover: movers[index]),
                           ),
                 };
-
               },
             ),
           ),

@@ -68,7 +68,9 @@ class _ProfilePageState extends State<ProfilePage> {
     final theme = Theme.of(context);
     final user = context.watch<AuthBloc>().state.user;
     final initials = (user?.displayName.isNotEmpty == true)
-        ? (user!.displayName.length > 2 ? user.displayName.substring(0, 2).toUpperCase() : user.displayName.toUpperCase())
+        ? (user!.displayName.length > 2
+              ? user.displayName.substring(0, 2).toUpperCase()
+              : user.displayName.toUpperCase())
         : 'DS';
 
     return Scaffold(
@@ -132,10 +134,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   },
                 ),
                 const SizedBox(height: 12),
-                OutlinedButton(
-                  onPressed: _confirmLogout,
-                  child: const Text('Log out'),
-                ),
+                OutlinedButton(onPressed: _confirmLogout, child: const Text('Log out')),
               ],
             ),
           ),
@@ -144,5 +143,3 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
-
-

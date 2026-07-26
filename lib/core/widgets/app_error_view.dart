@@ -24,27 +24,19 @@ class AppErrorView extends StatelessWidget {
                 color: colorScheme.errorContainer.withValues(alpha: 0.4),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
-                Icons.error_outline_rounded,
-                size: 40,
-                color: colorScheme.error,
-              ),
+              child: Icon(Icons.error_outline_rounded, size: 40, color: colorScheme.error),
             ),
             const SizedBox(height: 16),
             Text(
               'Something went wrong',
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
+              style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: colorScheme.onSurfaceVariant,
-              ),
+              style: theme.textTheme.bodyMedium?.copyWith(color: colorScheme.onSurfaceVariant),
             ),
             const SizedBox(height: 20),
             FilledButton.icon(
@@ -52,11 +44,9 @@ class AppErrorView extends StatelessWidget {
               icon: const Icon(Icons.refresh_rounded, size: 18),
               label: const Text('Retry'),
             ),
-
           ],
         ),
       ),
     );
   }
 }
-

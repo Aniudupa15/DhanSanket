@@ -33,7 +33,6 @@ import '../widgets/signal_card.dart';
 
 const List<String> _tabTitles = ['Overview', 'Indicators', 'Signals', 'Fundamentals', 'News', 'Corp. Actions'];
 
-
 class StockDetailPage extends StatefulWidget {
   final String symbol;
 
@@ -121,17 +120,10 @@ class _StockDetailPageState extends State<StockDetailPage> with SingleTickerProv
         ],
       ),
       bottomNavigationBar: Container(
-        padding: EdgeInsets.only(
-          left: 16,
-          right: 16,
-          top: 12,
-          bottom: 12 + MediaQuery.of(context).padding.bottom,
-        ),
+        padding: EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 12 + MediaQuery.of(context).padding.bottom),
         decoration: BoxDecoration(
           color: theme.colorScheme.surface,
-          border: Border(
-            top: BorderSide(color: theme.colorScheme.outlineVariant, width: 1),
-          ),
+          border: Border(top: BorderSide(color: theme.colorScheme.outlineVariant, width: 1)),
         ),
         child: Row(
           children: [
@@ -159,9 +151,7 @@ class _StockDetailPageState extends State<StockDetailPage> with SingleTickerProv
   void _showAddToWatchlistSheet(BuildContext context, String symbol) {
     showModalBottomSheet<void>(
       context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
       builder: (context) {
         return Padding(
           padding: const EdgeInsets.all(24),
@@ -175,9 +165,7 @@ class _StockDetailPageState extends State<StockDetailPage> with SingleTickerProv
                 title: const Text('Default Watchlist'),
                 onTap: () {
                   Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Added $symbol to Watchlist')),
-                  );
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Added $symbol to Watchlist')));
                 },
               ),
             ],
@@ -187,8 +175,6 @@ class _StockDetailPageState extends State<StockDetailPage> with SingleTickerProv
     );
   }
 }
-
-
 
 class _OverviewTab extends StatelessWidget {
   final String symbol;

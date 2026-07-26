@@ -25,17 +25,10 @@ class ScreenerResultTile extends StatelessWidget {
             backgroundColor: theme.colorScheme.primaryContainer,
             child: Text(
               result.symbol.length > 2 ? result.symbol.substring(0, 2) : result.symbol,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: theme.colorScheme.onPrimaryContainer,
-              ),
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: theme.colorScheme.onPrimaryContainer),
             ),
           ),
-          title: Text(
-            result.symbol,
-            style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
-          ),
+          title: Text(result.symbol, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
           subtitle: Text(
             result.name,
             maxLines: 1,
@@ -46,10 +39,7 @@ class ScreenerResultTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                '₹${result.close}',
-                style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
-              ),
+              Text('₹${result.close}', style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
               const SizedBox(height: 2),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
@@ -73,4 +63,3 @@ class ScreenerResultTile extends StatelessWidget {
     );
   }
 }
-

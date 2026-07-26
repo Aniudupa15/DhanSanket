@@ -25,21 +25,13 @@ class MarketMoverListSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                title,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-              ),
+              Text(title, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
               if (onSeeAll != null)
                 TextButton(
                   onPressed: onSeeAll,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      Text('See all'),
-                      Icon(Icons.chevron_right, size: 18),
-                    ],
+                    children: const [Text('See all'), Icon(Icons.chevron_right, size: 18)],
                   ),
                 ),
             ],
@@ -76,17 +68,15 @@ class MarketMoverListSection extends StatelessWidget {
                         children: [
                           Text(
                             mover.symbol,
-                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                ),
+                            style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
                           ),
                           Text(
                             mover.name,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                                ),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
                           ),
                         ],
                       ),
@@ -96,9 +86,7 @@ class MarketMoverListSection extends StatelessWidget {
                       children: [
                         Text(
                           '₹${mover.lastPrice}',
-                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                fontWeight: FontWeight.w700,
-                              ),
+                          style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                         ),
                         const SizedBox(height: 2),
                         if (mover.changePercent != null)
@@ -117,4 +105,3 @@ class MarketMoverListSection extends StatelessWidget {
     );
   }
 }
-

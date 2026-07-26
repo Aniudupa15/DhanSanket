@@ -13,9 +13,7 @@ class WatchlistItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final changePercent = item.changePercent != null
-        ? (double.tryParse(item.changePercent.toString()) ?? 0.0)
-        : null;
+    final changePercent = item.changePercent != null ? (double.tryParse(item.changePercent.toString()) ?? 0.0) : null;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -29,17 +27,10 @@ class WatchlistItemTile extends StatelessWidget {
             backgroundColor: theme.colorScheme.primaryContainer,
             child: Text(
               item.symbol.length > 2 ? item.symbol.substring(0, 2) : item.symbol,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: theme.colorScheme.onPrimaryContainer,
-              ),
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: theme.colorScheme.onPrimaryContainer),
             ),
           ),
-          title: Text(
-            item.symbol,
-            style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
-          ),
+          title: Text(item.symbol, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
           subtitle: Text(
             item.name,
             maxLines: 1,
@@ -77,4 +68,3 @@ class WatchlistItemTile extends StatelessWidget {
     );
   }
 }
-

@@ -33,9 +33,7 @@ class QuoteHeader extends StatelessWidget {
                       children: [
                         Text(
                           detail.symbol,
-                          style: theme.textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.w800,
-                          ),
+                          style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800),
                         ),
                         const SizedBox(width: 8),
                         Container(
@@ -58,9 +56,7 @@ class QuoteHeader extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       detail.name,
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
+                      style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -97,9 +93,7 @@ class _QuoteRow extends StatelessWidget {
       children: [
         Text(
           '₹${quote.lastPrice}',
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.w800,
-              ),
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w800),
         ),
         const SizedBox(width: 12),
         AppTrendBadge(
@@ -132,13 +126,12 @@ class _QuoteUnavailable extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             reason ?? 'Live quote is currently unavailable.',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
           ),
         ],
       ),
     );
   }
 }
-

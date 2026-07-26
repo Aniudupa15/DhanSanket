@@ -70,28 +70,29 @@ class _DividendsPageState extends State<DividendsPage> {
               builder: (context, state) {
                 return switch (state) {
                   DividendInitial() || DividendLoading() => ListView.separated(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      itemCount: 4,
-                      separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
-                      itemBuilder: (_, _) => const StockTileSkeleton(),
-                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    itemCount: 4,
+                    separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
+                    itemBuilder: (_, _) => const StockTileSkeleton(),
+                  ),
                   DividendError(:final failure) => AppErrorView(message: failure.message, onRetry: _apply),
-                  DividendLoaded(:final recommendations) => recommendations.isEmpty
-                      ? const AppEmptyState(
-                          icon: Icons.currency_rupee,
-                          title: 'No dividend data',
-                          message: 'No upcoming or high-yield dividend recommendations match your filter.',
-                        )
-                      : RefreshIndicator(
-                          onRefresh: () async => _apply(),
-                          child: ListView.builder(
-                            itemCount: recommendations.length,
-                            itemBuilder: (context, index) => DividendRecommendationTile(
-                              recommendation: recommendations[index],
-                              onTap: () => context.push(RoutePaths.stockDetail(recommendations[index].symbol)),
+                  DividendLoaded(:final recommendations) =>
+                    recommendations.isEmpty
+                        ? const AppEmptyState(
+                            icon: Icons.currency_rupee,
+                            title: 'No dividend data',
+                            message: 'No upcoming or high-yield dividend recommendations match your filter.',
+                          )
+                        : RefreshIndicator(
+                            onRefresh: () async => _apply(),
+                            child: ListView.builder(
+                              itemCount: recommendations.length,
+                              itemBuilder: (context, index) => DividendRecommendationTile(
+                                recommendation: recommendations[index],
+                                onTap: () => context.push(RoutePaths.stockDetail(recommendations[index].symbol)),
+                              ),
                             ),
                           ),
-                        ),
                 };
               },
             ),
@@ -101,4 +102,3 @@ class _DividendsPageState extends State<DividendsPage> {
     );
   }
 }
-
