@@ -1,7 +1,7 @@
 name: dhan_sanket
 description: DhanSanket - Indian stock market app (NSE data, watchlists, portfolios, AI signals)
 publish_to: 'none'
-version: 1.0.3+3
+version: 1.0.4+4
 
 environment:
   sdk: '>=3.8.0 <4.0.0'
