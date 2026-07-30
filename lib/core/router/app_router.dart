@@ -9,6 +9,7 @@ import '../../features/alerts/presentation/pages/alerts_page.dart';
 import '../../features/alerts/presentation/pages/notifications_page.dart';
 import '../../features/analysis/presentation/bloc/intraday_analysis_bloc.dart';
 import '../../features/analysis/presentation/bloc/long_term_analysis_bloc.dart';
+import '../../features/analysis/presentation/bloc/momentum_bloc.dart';
 import '../../features/analysis/presentation/pages/analysis_page.dart';
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../features/auth/presentation/bloc/auth_state.dart';
@@ -94,6 +95,7 @@ class AppRouter {
               providers: [
                 BlocProvider(create: (_) => getIt<IntradayAnalysisBloc>()),
                 BlocProvider(create: (_) => getIt<LongTermAnalysisBloc>()),
+                BlocProvider(create: (_) => getIt<MomentumBloc>()),
               ],
               child: const AnalysisPage(),
             ),

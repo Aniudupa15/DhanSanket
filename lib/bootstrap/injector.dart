@@ -18,10 +18,14 @@ import '../features/alerts/domain/repositories/notification_repository.dart';
 import '../features/alerts/presentation/bloc/alert_bloc.dart';
 import '../features/alerts/presentation/bloc/notification_bloc.dart';
 import '../features/analysis/data/datasources/analysis_remote_data_source.dart';
+import '../features/analysis/data/datasources/momentum_remote_data_source.dart';
 import '../features/analysis/data/repositories/analysis_repository_impl.dart';
+import '../features/analysis/data/repositories/momentum_repository_impl.dart';
 import '../features/analysis/domain/repositories/analysis_repository.dart';
+import '../features/analysis/domain/repositories/momentum_repository.dart';
 import '../features/analysis/presentation/bloc/intraday_analysis_bloc.dart';
 import '../features/analysis/presentation/bloc/long_term_analysis_bloc.dart';
+import '../features/analysis/presentation/bloc/momentum_bloc.dart';
 import '../features/auth/data/datasources/auth_remote_data_source.dart';
 import '../features/auth/data/repositories/auth_repository_impl.dart';
 import '../features/auth/domain/repositories/auth_repository.dart';
@@ -222,6 +226,11 @@ void setupInjector() {
   getIt.registerLazySingleton<AnalysisRepository>(() => AnalysisRepositoryImpl(getIt<AnalysisRemoteDataSource>()));
   getIt.registerFactory<IntradayAnalysisBloc>(() => IntradayAnalysisBloc(repository: getIt<AnalysisRepository>()));
   getIt.registerFactory<LongTermAnalysisBloc>(() => LongTermAnalysisBloc(repository: getIt<AnalysisRepository>()));
+  getIt.registerLazySingleton<MomentumRemoteDataSource>(
+    () => MomentumRemoteDataSource(getIt<Dio>(instanceName: _mainDio)),
+  );
+  getIt.registerLazySingleton<MomentumRepository>(() => MomentumRepositoryImpl(getIt<MomentumRemoteDataSource>()));
+  getIt.registerFactory<MomentumBloc>(() => MomentumBloc(repository: getIt<MomentumRepository>()));
 
   // Dividends feature
   getIt.registerLazySingleton<DividendRemoteDataSource>(
