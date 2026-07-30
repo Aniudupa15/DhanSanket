@@ -11,10 +11,14 @@ import '../bloc/intraday_analysis_state.dart';
 import '../bloc/long_term_analysis_bloc.dart';
 import '../bloc/long_term_analysis_event.dart';
 import '../bloc/long_term_analysis_state.dart';
+import '../bloc/momentum_bloc.dart';
+import '../bloc/momentum_event.dart';
+import '../bloc/momentum_state.dart';
 import '../widgets/intraday_recommendation_tile.dart';
 import '../widgets/long_term_recommendation_tile.dart';
+import '../widgets/momentum_pick_tile.dart';
 
-const List<String> _tabTitles = ['Intraday', 'Long-Term'];
+const List<String> _tabTitles = ['Intraday', 'Long-Term', 'Momentum'];
 
 class AnalysisPage extends StatefulWidget {
   const AnalysisPage({super.key});
@@ -50,6 +54,9 @@ class _AnalysisPageState extends State<AnalysisPage> with SingleTickerProviderSt
       case 1:
         final bloc = context.read<LongTermAnalysisBloc>();
         if (bloc.state is LongTermAnalysisInitial) bloc.add(const LongTermAnalysisRequested());
+      case 2:
+        final bloc = context.read<MomentumBloc>();
+        if (bloc.state is MomentumInitial) bloc.add(const MomentumRequested());
     }
   }
 
@@ -63,7 +70,7 @@ class _AnalysisPageState extends State<AnalysisPage> with SingleTickerProviderSt
           tabs: _tabTitles.map((t) => Tab(text: t)).toList(),
         ),
       ),
-      body: TabBarView(controller: _tabController, children: const [_IntradayTab(), _LongTermTab()]),
+      body: TabBarView(controller: _tabController, children: const [_IntradayTab(), _LongTermTab(), _MomentumTab()]),
     );
   }
 }
@@ -96,6 +103,65 @@ class _IntradayTab extends StatelessWidget {
                   ),
         };
       },
+    );
+  }
+}
+
+class _MomentumTab extends StatelessWidget {
+  const _MomentumTab();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MomentumBloc, MomentumState>(
+      builder: (context, state) {
+        return switch (state) {
+          MomentumInitial() || MomentumLoading() => const AppLoadingView(),
+          MomentumError(:final failure) => AppErrorView(
+            message: failure.message,
+            onRetry: () => context.read<MomentumBloc>().add(const MomentumRequested()),
+          ),
+          MomentumLoaded(:final picks) =>
+            picks.isEmpty
+                ? const Center(child: Text('No momentum picks right now.'))
+                : RefreshIndicator(
+                    onRefresh: () async => context.read<MomentumBloc>().add(const MomentumRequested()),
+                    child: ListView.builder(
+                      itemCount: picks.length + 1,
+                      itemBuilder: (context, index) {
+                        if (index == 0) return const _MomentumHeader();
+                        final pick = picks[index - 1];
+                        return MomentumPickTile(
+                          pick: pick,
+                          onTap: () => context.push(RoutePaths.stockDetail(pick.symbol)),
+                        );
+                      },
+                    ),
+                  ),
+        };
+      },
+    );
+  }
+}
+
+class _MomentumHeader extends StatelessWidget {
+  const _MomentumHeader();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("This month's top momentum picks", style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 4),
+          Text(
+            'The liquid NSE universe ranked by 30-day return - a long-term / positional signal '
+            '(hold ~monthly), not an intraday call. Educational, not investment advice.',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ],
+      ),
     );
   }
 }
