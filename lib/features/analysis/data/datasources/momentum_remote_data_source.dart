@@ -24,11 +24,14 @@ class MomentumRemoteDataSource {
     return picks.asMap().entries.map((entry) {
       final json = entry.value as Map<String, dynamic>;
       return MomentumPick(
-        rank: entry.key + 1,
+        rank: (json['rank'] as int?) ?? entry.key + 1,
         symbol: json['symbol'] as String,
         name: (json['name'] as String?) ?? json['symbol'] as String,
         trailingReturnPct: (json['trailing_return_pct'] as num).toDouble(),
         lastClose: (json['last_close'] as num).toDouble(),
+        signalRaw: json['signal'] as String?,
+        holdPeriodRaw: json['hold_period'] as String?,
+        confidenceRaw: (json['confidence'] as num?)?.toInt(),
       );
     }).toList();
   }
