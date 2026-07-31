@@ -156,8 +156,10 @@ class _MomentumHeader extends StatelessWidget {
           Text("This month's top momentum picks", style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 4),
           Text(
-            'The liquid NSE universe ranked by 30-day return - a long-term / positional signal '
-            '(hold ~monthly), not an intraday call. Educational, not investment advice.',
+            'The liquid NSE universe ranked by 30-day return. Each is a BUY held ~1 month; a name '
+            'becomes a SELL when it drops out of the top ranks at the monthly rebalance. Confidence '
+            'is a rank-based tilt (the strategy hit ~53% of months historically), not a guarantee. '
+            'Long-term / positional - not intraday. Educational, not investment advice.',
             style: Theme.of(context).textTheme.bodySmall,
           ),
         ],
