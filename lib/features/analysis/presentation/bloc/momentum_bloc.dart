@@ -8,9 +8,7 @@ import 'momentum_state.dart';
 class MomentumBloc extends Bloc<MomentumEvent, MomentumState> {
   final MomentumRepository _repository;
 
-  MomentumBloc({required MomentumRepository repository})
-    : _repository = repository,
-      super(const MomentumInitial()) {
+  MomentumBloc({required MomentumRepository repository}) : _repository = repository, super(const MomentumInitial()) {
     on<MomentumRequested>(_onRequested);
   }
 
